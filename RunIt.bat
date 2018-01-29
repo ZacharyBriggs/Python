@@ -1,3 +1,3 @@
 @ECHO Off
-python main.py
+python vector2.py
 pause
