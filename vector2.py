@@ -32,20 +32,4 @@ class Vector2(object):
 		mag = self.magnitude()
 		new_vec = Vector2(self.x_pos / mag, self.y_pos / mag)
 		return new_vec
-VEC_A = Vector2(5, 7)
-VEC_B = Vector2(2, 3)
-VEC_C = VEC_A + VEC_B
-print VEC_C.x_pos
-print VEC_C.y_pos
-VEC_C = VEC_C - VEC_A
-print VEC_C.x_pos
-print VEC_C.y_pos
-VEC_C = VEC_B * 5
-print VEC_A.dot(VEC_B)
-print VEC_C.x_pos
-print VEC_C.y_pos
-print VEC_A.magnitude()
-VEC_A = Vector2(5, 7)
-VEC_C = VEC_A.normalize()
-print VEC_C.x_pos
-print VEC_C.y_pos
+

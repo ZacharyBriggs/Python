@@ -1,3 +1,3 @@
 @ECHO Off
-python vector2.py
+python game.py
 pause
