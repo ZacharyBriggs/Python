@@ -1,3 +1,3 @@
 @ECHO Off
-python game.py
+python passwordgenerator.py
 pause

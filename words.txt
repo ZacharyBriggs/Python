@@ -70,3 +70,6 @@ frog
 toad
 penguin
 gorilla
+whale
+platypus
+rabbit
