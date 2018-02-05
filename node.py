@@ -16,5 +16,6 @@ class Node:
         self.h_score = (abs(goal.position.x_pos - goal.position.y_pos) + abs(self.position.x_pos - self.position.y_pos)) * 10
     def calculate_f():
         self.f_score = g_score + h_score
-    def make_wall()
+    def set_parent():
+    def make_wall():
         self.is_traversable = False
