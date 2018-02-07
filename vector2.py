@@ -33,5 +33,5 @@ class Vector2(object):
 		new_vec = Vector2(self.x_pos / mag, self.y_pos / mag)
 		return new_vec
 	def calc_distance(self, other):
-		return abs(other.position.x_pos - other.position.y_pos) + abs(self.position.x_pos - self.position.y_pos)
+		return abs(other.x_pos - self.x_pos) + abs(other.y_pos - self.y_pos)
 
