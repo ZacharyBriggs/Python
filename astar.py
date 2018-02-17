@@ -18,22 +18,21 @@ class A_Star:
     #search_area.nodes[7].calc_g(search_area.nodes[6])
     #search_area.nodes[7].calc_h(search_area.nodes[18].position)
     #search_area.nodes[7].calc_f()'''
-def find_neighbors( graph, current_pos, open_list):
+def find_neighbors(graph, current_pos, open_list):
     neighbors = []
     neighbor_pos = []    
-    neightbor_pos.append(current_pos + Vector2(-1, 1))
-    neightbor_pos.append(current_pos + Vector2(0, 1))
-    neightbor_pos.append(current_pos + Vector2(1, 1))
-    neightbor_pos.append(current_pos + Vector2(-1, 0))
-    neightbor_pos.append(current_pos + Vector2(1, 0))
-    neightbor_pos.append(current_pos + Vector2(-1, -1))
-    neightbor_pos.append(current_pos + Vector2(0, -1))
-    neightbor_pos.append(current_pos + Vector2(1, -1))
+    neighbor_pos.append(current_pos + Vector2(-1, 1))
+    neighbor_pos.append(current_pos + Vector2(0, 1))
+    neighbor_pos.append(current_pos + Vector2(1, 1))
+    neighbor_pos.append(current_pos + Vector2(-1, 0))
+    neighbor_pos.append(current_pos + Vector2(1, 0))
+    neighbor_pos.append(current_pos + Vector2(-1, -1))
+    neighbor_pos.append(current_pos + Vector2(0, -1))
+    neighbor_pos.append(current_pos + Vector2(1, -1))
     for node in graph.nodes:
         for pos in neighbor_pos:
-            if node.pos == pos:
-                neighbors.append(pos)
-    return neighbors    
+            if node.position.x_pos == pos.x_pos and node.position.y_pos == pos.y_pos:
+                open_list.append(Node(pos, True))
 
 def main():
     #startup()
@@ -44,9 +43,15 @@ def main():
     current_node = search_area.nodes[6]
     open_list = []
     close_list = []
+    goal_node = Vector2(4,4)
     open_list.append(current_node)
     open_list.remove(current_node)
     close_list.append(current_node)
     find_neighbors(search_area, current_node.position, open_list)
+    for i in range (0,8):
+        open_list[i].calc_g(current_node)
+        open_list[i].calc_h(goal_node)
+        open_list[i].calc_f()
+    open_list.sort(key = lambda Node: Node.f_score)
     i = 0
 main()

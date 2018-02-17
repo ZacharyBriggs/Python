@@ -1,8 +1,8 @@
 from vector2 import Vector2
 class Node:
-    def __init__(self, pos):
+    def __init__(self, pos, traversable):
         self.position = pos
-        self.traversable = True
+        self.traversable = traversable
         self.g_score = 0
         self.h_score = 0
         self.f_score = 0

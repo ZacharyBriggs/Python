@@ -8,4 +8,4 @@ class Graph:
     def create_nodes(self):
         for x in range(0, self.dimensions.x_pos):            
             for y in range(0, self.dimensions.y_pos):                
-                self.nodes.append(Node(Vector2(x, y)))
+                self.nodes.append(Node(Vector2(x, y),True))
