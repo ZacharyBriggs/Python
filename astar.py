@@ -44,14 +44,20 @@ def main():
     open_list = []
     close_list = []
     goal_node = Vector2(4,4)
-    open_list.append(current_node)
-    open_list.remove(current_node)
-    close_list.append(current_node)
-    find_neighbors(search_area, current_node.position, open_list)
-    for i in range (0,8):
-        open_list[i].calc_g(current_node)
-        open_list[i].calc_h(goal_node)
-        open_list[i].calc_f()
-    open_list.sort(key = lambda Node: Node.f_score)
-    i = 0
+    goal_found = False
+    while(goal_found is False):
+        open_list.append(current_node)
+        open_list.remove(current_node)
+        close_list.append(current_node)
+        find_neighbors(search_area, current_node.position, open_list)
+        for i in range (0,8):
+            open_list[i].calc_g(current_node)
+            open_list[i].calc_h(goal_node)
+            open_list[i].calc_f()
+        open_list.sort(key = lambda Node: Node.f_score)
+        current_node = open_list[0]
+        for node in open_list:
+            open_list.remove(node)
+        if current_node.position is Vector2(goal_node.x_pos, goal_node.y_pos):
+            goal_found = True
 main()
