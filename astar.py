@@ -18,9 +18,9 @@ class A_Star:
     #search_area.nodes[7].calc_g(search_area.nodes[6])
     #search_area.nodes[7].calc_h(search_area.nodes[18].position)
     #search_area.nodes[7].calc_f()'''
-def find_neighbors(graph, current_pos, open_list):
+def find_neighbors(graph, current_pos, open_list, goal_node):
     neighbors = []
-    neighbor_pos = []    
+    neighbor_pos = [] 
     neighbor_pos.append(current_pos + Vector2(-1, 1))
     neighbor_pos.append(current_pos + Vector2(0, 1))
     neighbor_pos.append(current_pos + Vector2(1, 1))
@@ -38,18 +38,19 @@ def main():
     #startup()
     graph_x = 5
     graph_y = 5
+    a = 0
     search_area = Graph(Vector2(graph_x, graph_y))
     search_area.create_nodes()
     current_node = search_area.nodes[6]
     open_list = []
     close_list = []
-    goal_node = Vector2(4,4)
+    goal_node = Vector2(3,3)
     goal_found = False
-    while(goal_found is False):
+    while(goal_found == False):
         open_list.append(current_node)
         open_list.remove(current_node)
         close_list.append(current_node)
-        find_neighbors(search_area, current_node.position, open_list)
+        find_neighbors(search_area, current_node.position, open_list, goal_node)
         for i in range (0,8):
             open_list[i].calc_g(current_node)
             open_list[i].calc_h(goal_node)
@@ -58,6 +59,6 @@ def main():
         current_node = open_list[0]
         for node in open_list:
             open_list.remove(node)
-        if current_node.position is Vector2(goal_node.x_pos, goal_node.y_pos):
+        a += 1
             goal_found = True
 main()
