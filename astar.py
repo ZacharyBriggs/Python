@@ -59,6 +59,7 @@ def main():
         current_node = open_list[0]
         for node in open_list:
             open_list.remove(node)
-        a += 1
+        if close_list[a].position is Vector2(goal_node.x_pos, goal_node.y_pos):
             goal_found = True
+        a += 1
 main()
