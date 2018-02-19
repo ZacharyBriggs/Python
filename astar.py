@@ -7,12 +7,10 @@ class A_Star:
         self.close_list = []  
         self.start_node = start
         self.goal_node = goal
-        #Start Node variable
         #search space variable
-    def startup():
-        graph_x = 5
-        graph_y = 5
-        search_area = Graph(Vector2(graph_x, graph_y))
+
+    def startup(self, width, height):
+        search_area = Graph(Vector2(width, height))
         search_area.create_nodes()
         open_list = []
         open_list.append(search_area.nodes[6])
@@ -21,7 +19,33 @@ class A_Star:
         neighbors = []
         goal_node = Vector2(3,3)
 
-def find_neighbors(graph, current_pos):
+    def pathfind(self):
+        goal_found = False
+        while(goal_found == False):
+            current_node = open_list[0]
+            open_list.append(current_node)
+            close_list.append(current_node)
+            if close_list[len(close_list) - 1].position == goal_node:
+                goal_found = True
+                break
+            neighbors = find_neighbors(search_area, current_node.position)
+            for neighbor in neighbors:
+                open_list.append(neighbor)
+            for item in open_list:
+                if item.traversable == True:
+                    item.calc_g(current_node)
+                    #if item.parent != None:
+                        #if item.g_score < item.parent.g_score:
+                            #item.parent = item
+                    item.calc_h(goal_node)
+                    item.calc_f()
+                    if item.g_score < current_node.g_score:
+                        current_node = item
+                item.set_parent(current_node)
+        parents.append(current_node)
+        open_list.sort(key = lambda Node: Node.f_score)
+
+def find_neighbors(self, graph, current_pos):
     neighbors = []
     neighbor_pos = [] 
     neighbor_pos.append(current_pos + Vector2(-1, 1)) #Top Left
@@ -38,44 +62,8 @@ def find_neighbors(graph, current_pos):
                 neighbors.append(node)
     return neighbors
 
-def pathfind():
-
 def main():
-    #needs to be in a function in the A_Star class
-    #startup()
-    graph_x = 5
-    graph_y = 5
-    search_area = Graph(Vector2(graph_x, graph_y))
-    search_area.create_nodes()
-    open_list = []
-    open_list.append(search_area.nodes[6])
-    close_list = []
-    parents = []
-    neighbors = []
-    goal_node = Vector2(3,3)
-    goal_found = False
-    while(goal_found == False):
-        current_node = open_list[0]
-        open_list.append(current_node)
-        close_list.append(current_node)
-        if close_list[len(close_list) - 1].position == goal_node:
-            goal_found = True
-            break
-        neighbors = find_neighbors(search_area, current_node.position)
-        for neighbor in neighbors:
-            open_list.append(neighbor)
-        for item in open_list:
-            if item.traversable == True:
-                item.calc_g(current_node)
-                #if item.parent != None:
-                    #if item.g_score < item.parent.g_score:
-                        #item.parent = item
-                item.calc_h(goal_node)
-                item.calc_f()
-                if item.g_score < current_node.g_score:
-                    current_node = item
-                item.set_parent(current_node)
-        parents.append(current_node)
-        open_list.sort(key = lambda Node: Node.f_score)
-
+    astar = A_Star(Vector2(1,1),Vector2(3,3))
+    astar.startup(5,5)
+    astar.pathfind()
 main()
