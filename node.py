@@ -22,7 +22,7 @@ class Node(object):
     def calc_f(self):
         self.f_score = self.g_score + self.h_score
 
-    def set_parent(parent_node):
+    def set_parent(self, parent_node):
         self.parent = parent_node
         
     def toggle_traversable():
