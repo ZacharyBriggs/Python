@@ -1,3 +1,3 @@
 @ECHO Off
-python passwordgenerator.py
+python warmup.py
 pause
