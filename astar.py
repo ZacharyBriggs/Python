@@ -9,6 +9,7 @@ class A_Star:
         self.goal_node = goal
         #Start Node variable
         #search space variable
+
 def find_neighbors(graph, current_pos):
     neighbors = []
     neighbor_pos = [] 
@@ -23,8 +24,8 @@ def find_neighbors(graph, current_pos):
     for node in graph.nodes:
         for pos in neighbor_pos:
             if node.position.x_pos == pos.x_pos and node.position.y_pos == pos.y_pos:
-                neighbors.append(node) #Don't create a new node you pass in the node at that position
-    return neighbors[]
+                neighbors.append(node)
+    return neighbors
 
 def main():
     #needs to be in a function in the A_Star class
@@ -36,21 +37,26 @@ def main():
     current_node = search_area.nodes[6]
     open_list = []
     close_list = []
+    parents = []
+    neighbors = []
     goal_node = Vector2(3,3)
     goal_found = False
     while(goal_found == False):
-        open_list.append(current_node)
-        open_list.remove(current_node)
-        close_list.append(current_node)
-        open_list = find_neighbors(search_area, current_node.position)
-        for item in open_list: #Iterate using the list, This will go out of range and get no existing items    
-            item.calc_g(current_node)
-            item.calc_h(goal_node)
-            item.calc_f()
-        open_list.sort(key = lambda Node: Node.f_score)
         current_node = open_list[0]
-        for node in open_list:
-            open_list.remove(node)
+        open_list.append(current_node)
+        close_list.append(current_node)
         if close_list[len(close_list) - 1].position == goal_node:
             goal_found = True
+        neighbors = find_neighbors(search_area, current_node.position)
+        for neighbor in neighbors
+            open_list.append(neighbor)
+        for item in open_list:
+            if item.parent == None
+                item.calc_g(current_node)
+                item.calc_h(goal_node)
+                item.calc_f()
+                item.set_parent(current_node)
+        parents.append(current_node)
+        open_list.sort(key = lambda Node: Node.f_score)
+        
 main()
