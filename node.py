@@ -9,6 +9,9 @@ class Node(object):
         self.parent = None
 
     def calc_g(self, current_node):
+        #if node is in open list or has a parent
+        #calculate a tentative g and if the tentative g is better than the nodes current g
+        #reparent the node and set the g to the tentative and recalc f score  
         if self.parent is not None:
             tentative_g = self.g_score
             if self.position.x_pos is current_node.position.x_pos or self.position.y_pos is current_node.position.y_pos:
@@ -25,7 +28,7 @@ class Node(object):
             self.g_score = current_node.g_score + 14
 
     def calc_h(self, goal):
-        self.h_score = self.position.calc_distance(goal) * 10
+        self.h_score = self.position.calc_distance(goal.position) * 10
 
     def calc_f(self):
         self.f_score = self.g_score + self.h_score
