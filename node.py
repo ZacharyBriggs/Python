@@ -9,8 +9,16 @@ class Node(object):
         self.parent = None
 
     def calc_g(self, current_node):
+        if self.parent is not None:
+            tentative_g = self.g_score
+            if self.position.x_pos is current_node.position.x_pos or self.position.y_pos is current_node.position.y_pos:
+                tentative_g = current_node.g_score + 10
+            else:
+                tentative_g = current_node.g_score + 14
+            if tentative_g < self.g_score:
+                self.g_score = tentative_g
         if self.position.x_pos is current_node.position.x_pos and self.position.y_pos is current_node.position.y_pos:
-            self.g_score = current_node.g_score
+            return
         if self.position.x_pos is current_node.position.x_pos or self.position.y_pos is current_node.position.y_pos:
             self.g_score = current_node.g_score + 10
         else:
