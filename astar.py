@@ -12,9 +12,8 @@ class A_Star:
     def startup(self, width, height):
         self.search_area = Graph(Vector2(width, height))
         self.search_area.create_nodes()
-        self.open_list.append(self.search_area.nodes[18])
-        self.goal_node = self.search_area.nodes[46] 
-        self.parents = []
+        self.open_list.append(self.search_area.nodes[self.start_node])
+        self.goal_node = self.search_area.nodes[self.goal_node] 
         self.neighbors = []
 
     def pathfind(self):
@@ -28,6 +27,8 @@ class A_Star:
             #Move lowest f score to closed list and remove it from the open list
             self.open_list.remove(current_node)
             self.close_list.append(current_node)
+            if self.close_list.__contains__(self.goal_node):
+                break
             #find node neighbors
             self.neighbors = self.search_area.find_neighbors(current_node.position)
             for neighbor in self.neighbors:
@@ -36,13 +37,22 @@ class A_Star:
                     self.open_list.append(neighbor)                    
                     neighbor.calc_g(current_node)
                     neighbor.calc_h(self.goal_node)
-                    neighbor.calc_f()
-                    neighbor.set_parent(current_node)                                                          
+                    neighbor.calc_f()    
+                                                              
             #stop once
                 #goal node is in the closed list
-                #open list is empty     
+                #open list is empty
+        path = []
+        step = self.goal_node
+        path.append(step)
+        while step.parent != None:
+            path.append(step.parent)
+            step = step.parent        
+        return path
 def main():
-    astar = A_Star(Vector2(0, 0),Vector2(6, 4))
+    astar = A_Star(18, 46)
     astar.startup(7, 7)
-    astar.pathfind()
+    a = astar.pathfind()
+    b = 0
+
 main()

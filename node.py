@@ -24,8 +24,10 @@ class Node(object):
             return
         if self.position.x_pos is current_node.position.x_pos or self.position.y_pos is current_node.position.y_pos:
             self.g_score = current_node.g_score + 10
+            self.set_parent(current_node)
         else:
             self.g_score = current_node.g_score + 14
+            self.set_parent(current_node)
 
     def calc_h(self, goal):
         self.h_score = self.position.calc_distance(goal.position) * 10
