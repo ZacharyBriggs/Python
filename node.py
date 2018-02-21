@@ -27,7 +27,7 @@ class Node(object):
             tentative_g = current_node.g_score + 14
             if tentative_g < self.g_score:
                 self.g_score = tentative_g   
-         self.set_parent(current_node)
+        self.set_parent(current_node)
 
     def calc_h(self, goal):
         '''Calculates the H score of a node'''

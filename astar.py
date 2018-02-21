@@ -53,11 +53,12 @@ class A_Star:
         return path
 
 def main():
-    astar = A_Star(Vector2(0, 0),Vector2(6, 4))
+    astar = A_Star(Vector2(4, 2),Vector2(6, 4))
     astar = A_Star(18, 46)
     astar.startup(7, 7)
     astar.pathfind()
     a = astar.pathfind()
+    astar.search_area.print_graph(Vector2(4,2), Vector2(6,2))
     b = 0
 
 main()
