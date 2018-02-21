@@ -51,3 +51,13 @@ class A_Star:
             step = step.parent
         #Adds all the parents to a path list and then returns it       
         return path
+
+def main():
+    astar = A_Star(Vector2(0, 0),Vector2(6, 4))
+    astar = A_Star(18, 46)
+    astar.startup(7, 7)
+    astar.pathfind()
+    a = astar.pathfind()
+    b = 0
+
+main()

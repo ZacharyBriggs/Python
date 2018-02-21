@@ -31,3 +31,7 @@ class Graph:
                 if node.position.x_pos == pos.x_pos and node.position.y_pos == pos.y_pos:
                     neighbors.append(node)
         return neighbors
+
+    def print_graph(self):
+        for node in self.nodes:
+            print "[node.position.x_pos, node.position.y_pos]"
