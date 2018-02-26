@@ -3,15 +3,12 @@ from vector2 import Vector2
 from node import Node
 from graph import Graph
 class A_Star:
-    def __init__(self, start, goal):
+    def __init__(self, start, goal, width, height):
         '''Initilizes the A_Star class and creates an open_list, close_list, sets the start_node, and goal_node'''
         self.open_list = []
         self.close_list = []  
         self.start_node = start
         self.goal_node = goal
-
-    def startup(self, width, height):
-        '''Creates the graph, sets the goal_node, and creates the neighbors list'''
         self.search_area = Graph(Vector2(width, height))
         self.search_area.create_nodes()
         self.goal_node = self.search_area.nodes[self.goal_node]
@@ -56,8 +53,7 @@ class A_Star:
         return path
 
 def main():
-    astar = A_Star(8, 46)
-    astar.startup(7, 7)
+    astar = A_Star(8, 46, 7, 7)
     path = astar.pathfind()
     astar.search_area.print_graph(astar.start_node, astar.goal_node,path)
     b = 0
