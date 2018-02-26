@@ -8,6 +8,8 @@ class Node(object):
         self.h_score = 0
         self.f_score = 0
         self.parent = None
+        self.is_start = False
+        self.is_goal = False
 
     def calc_g(self, current_node):
         '''Calculates the G score of a node'''
