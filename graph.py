@@ -42,11 +42,10 @@ class Graph:
                 graph_string = "[S]" + graph_string
             elif node.position == goal_node.position:
                 graph_string = "[G]" + graph_string
+            elif path.__contains__(node):
+                 graph_string = "[@]" + graph_string
             else:            
-                graph_string = "[ ]" + graph_string
-            for path_node in path:
-                if node.position == path_node.position:
-                    graph_string = "[@]" + graph_string
+                graph_string = "[ ]" + graph_string  
             if node.position.y_pos >= self.dimensions.y_pos - 1:
                 graph_string = "\n" + graph_string
                 print graph_string

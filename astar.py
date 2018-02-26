@@ -14,6 +14,9 @@ class A_Star:
         self.goal_node = self.search_area.nodes[self.goal_node]
         self.goal_node.is_goal = True 
         self.neighbors = []
+        self.path = []
+        self.step = self.goal_node
+        self.path.append(self.step)
 
     def pathfind(self):
         '''The A_Star algorithm. Detects a path to a goal node on a grid and returns a path list'''
@@ -42,15 +45,15 @@ class A_Star:
                     neighbor.calc_g(current_node)
                     neighbor.calc_h(self.goal_node)
                     neighbor.calc_f()  
-            #Iterates through the neighbor list and calculates the g,h, and f score of all the neighbors                                            
-        path = []
-        step = self.goal_node
-        path.append(step)
-        while step.parent != None:
-            path.append(step.parent)
-            step = step.parent
+            #Iterates through the neighbor list and calculates the g,h, and f score of all the neighbors
+        if self.goal_node not in self.close_list:
+            return [] 
+        self.step = self.goal_node                                           
+        while self.step != None:
+            self.path.append(self.step)
+            self.step = self.step.parent
         #Adds all the parents to a path list and then returns it       
-        return path
+        return self.path
 
 def main():
     astar = A_Star(8, 46, 7, 7)

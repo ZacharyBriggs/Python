@@ -19,15 +19,16 @@ class Node(object):
         tentative_g = self.g_score
         if self.position.x_pos is current_node.position.x_pos and self.position.y_pos is current_node.position.y_pos:
             return
-        if self.position.x_pos is current_node.position.x_pos or self.position.y_pos is current_node.position.y_pos:
-            self.g_score = current_node.g_score + 10
+        if self.position.x_pos is current_node.position.x_pos or self.position.y_pos is current_node.position.y_pos:            
             tentative_g = current_node.g_score + 10
-        else:
-            self.g_score = current_node.g_score + 14
+        else:            
             tentative_g = current_node.g_score + 14
         if current_node.parent != None:
             if tentative_g < self.g_score:
-                self.g_score = tentative_g 
+                self.g_score = tentative_g
+                self.set_parent(current_node)
+                return 
+        self.g_score = tentative_g
         self.set_parent(current_node)
 
     def calc_h(self, goal):
