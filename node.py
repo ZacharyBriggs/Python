@@ -8,6 +8,8 @@ class Node(object):
         self.h_score = 0
         self.f_score = 0
         self.parent = None
+        self.is_start = False
+        self.is_goal = False
 
     def calc_g(self, current_node):
         '''Calculates the G score of a node'''
@@ -27,7 +29,7 @@ class Node(object):
             tentative_g = current_node.g_score + 14
             if tentative_g < self.g_score:
                 self.g_score = tentative_g   
-         self.set_parent(current_node)
+        self.set_parent(current_node)
 
     def calc_h(self, goal):
         '''Calculates the H score of a node'''

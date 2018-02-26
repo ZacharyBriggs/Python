@@ -32,6 +32,23 @@ class Graph:
                     neighbors.append(node)
         return neighbors
 
-    def print_graph(self):
+    def print_graph(self, start_node, goal_node, path):
+        graph_string = ""
+        node_num = 0
         for node in self.nodes:
-            print "[node.position.x_pos, node.position.y_pos]"
+            if node.traversable is False:
+                graph_string = "[X]" + graph_string
+            elif node.position == start_node.position:
+                graph_string = "[S]" + graph_string
+            elif node.position == goal_node.position:
+                graph_string = "[G]" + graph_string
+            else:            
+                graph_string = "[ ]" + graph_string
+            for path_node in path:
+                if node.position == path_node.position:
+                    graph_string = "[@]" + graph_string
+            if node.position.y_pos >= self.dimensions.y_pos - 1:
+                graph_string = "\n" + graph_string
+                print graph_string
+                graph_string = ""
+            node_num += 1

@@ -14,13 +14,16 @@ class A_Star:
         '''Creates the graph, sets the goal_node, and creates the neighbors list'''
         self.search_area = Graph(Vector2(width, height))
         self.search_area.create_nodes()
-        self.goal_node = self.search_area.nodes[self.goal_node] 
+        self.goal_node = self.search_area.nodes[self.goal_node]
+        self.goal_node.is_goal = True 
         self.neighbors = []
 
     def pathfind(self):
         '''The A_Star algorithm. Detects a path to a goal node on a grid and returns a path list'''
         goal_found = False
         self.open_list.append(self.search_area.nodes[self.start_node])
+        self.start_node = self.search_area.nodes[self.start_node]
+        self.start_node.is_start = True
         current_node = self.open_list[0]
         #Adds the starting node to the open_list and sets the current node to the starting node
         while not self.close_list.__contains__(self.goal_node) or len(self.open_list) == 0:
@@ -53,11 +56,10 @@ class A_Star:
         return path
 
 def main():
-    astar = A_Star(Vector2(0, 0),Vector2(6, 4))
-    astar = A_Star(18, 46)
+    astar = A_Star(8, 46)
     astar.startup(7, 7)
-    astar.pathfind()
-    a = astar.pathfind()
+    path = astar.pathfind()
+    astar.search_area.print_graph(astar.start_node, astar.goal_node,path)
     b = 0
 
 main()

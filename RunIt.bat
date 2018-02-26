@@ -1,3 +1,3 @@
 @ECHO Off
-python warmup.py
+python astar.py
 pause
