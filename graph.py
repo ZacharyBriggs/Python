@@ -1,6 +1,7 @@
 '''Graph class made up of nodes'''
 from node import Node
 from vector2 import Vector2
+from shape import Shape
 
 class Graph:
     '''Graph class that has a function for creation and for finding neighbors of a node'''
@@ -17,8 +18,10 @@ class Graph:
     def __getiten__(self, index):
         return self.nodes[index]
 
-    def print_graph(self, start_node, goal_node, path):
+    def print_graph(self, start_node, goal_node, path, surface):
         graph_string = ""
+        draw_pos = Vector2(0,0)
+        shapes = Shape(surface)
         node_num = 0
         for node in self.nodes:
             if node.traversable is False:
@@ -27,10 +30,12 @@ class Graph:
                 graph_string = "[S]" + graph_string
             elif node.position == goal_node.position:
                 graph_string = "[G]" + graph_string
+                shapes.draw_goal(draw_pos)
             elif path.__contains__(node):
                  graph_string = "[@]" + graph_string
             else:            
-                graph_string = "[ ]" + graph_string  
+                graph_string = "[ ]" + graph_string
+                shapes.draw_node(draw_pos)  
             if node.position.y_pos >= self.dimensions.y_pos - 1:
                 graph_string = "\n" + graph_string
                 print graph_string
