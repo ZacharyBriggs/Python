@@ -11,6 +11,9 @@ class A_Star:
         self.search_area.create_nodes()
         self.neighbors = []
         self.path = []
+        self.start_node = search.nodes[start]
+        self.goal_node = search.nodes[goal]
+        self.goal_node.is_goal = True
 
     def find_neighbors(self, graph, current_pos):
         '''Finds all the neighbors adjacent to the current node and returns a list of the neighbors'''
@@ -24,7 +27,7 @@ class A_Star:
         neighbor_pos.append(current_pos + Vector2(-1, -1)) #Bot Left
         neighbor_pos.append(current_pos + Vector2(0, -1)) #Bot
         neighbor_pos.append(current_pos + Vector2(1, -1)) #Bot Right
-        for node in graph:
+        for node in graph.nodes:
             for pos in neighbor_pos:
                 if node.position.x_pos == pos.x_pos and node.position.y_pos == pos.y_pos:
                     neighbors.append(node)
@@ -32,15 +35,11 @@ class A_Star:
 
     def pathfind(self, start, goal, search):
         '''The A_Star algorithm. Detects a path to a goal node on a grid and returns a path list'''
-        start_node = start
-        goal_node = goal
-        start_index = search.index(start)
-        goal_index = search.index(goal)
-        goal_node.is_goal = True
+        
         step = goal_node
         goal_found = False
-        self.open_list.append(search[start_index])
-        start_node = search[start_index]
+        self.open_list.append(search.nodes[start])
+        start_node = search.nodes[start]
         start_node.is_start = True
         current_node = self.open_list[0]                
         #Adds the starting node to the open_list and sets the current node to the starting node
@@ -60,9 +59,9 @@ class A_Star:
                 #if node isn't in open list, and it is not in the closed list, and is traversable  add it, calc g, calc h, clac for
                 if not self.close_list.__contains__(neighbor) and neighbor.traversable:
                     self.open_list.append(neighbor)                    
-                    neighbor.calculate_g_score(current_node)
-                    neighbor.calculate_h_score(goal_node)
-                    neighbor.calculate_f_score()  
+                    neighbor.calc_g(current_node)
+                    neighbor.calc_h(goal_node)
+                    neighbor.calc_f()  
             #Iterates through the neighbor list and calculates the g,h, and f score of all the neighbors
         if goal_node not in self.close_list:
             return [] 
@@ -73,10 +72,9 @@ class A_Star:
         #Adds all the parents to a path list and then returns it       
         return self.path
 
-#def main():
-    #astar = A_Star(7, 7)
-    #path = astar.pathfind(8, 46, astar.search_area)
-    #astar.search_area.print_graph(astar.start_node, astar.goal_node,path)
-    #b = 0
+def main():
+    astar = A_Star(7, 7)
+    path = astar.pathfind(8, 43, astar.search_area)
+    astar.search_area.print_graph(astar.start, astar.goal,path)
 
-#main()
+main()

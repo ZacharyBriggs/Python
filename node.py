@@ -11,7 +11,7 @@ class Node(object):
         self.is_start = False
         self.is_goal = False
 
-    def calculate_g(self, current_node):
+    def calc_g(self, current_node):
         '''Calculates the G score of a node'''
         #if node is in open list or has a parent
         #calculate a tentative g and if the tentative g is better than the nodes current g
@@ -31,11 +31,11 @@ class Node(object):
         self.g_score = tentative_g
         self.set_parent(current_node)
 
-    def calculate_h(self, goal):
+    def calc_h(self, goal):
         '''Calculates the H score of a node'''
         self.h_score = self.position.calc_distance(goal.position) * 10
 
-    def calculate_f(self):
+    def calc_f(self):
         '''Calculates the F score of a node'''
         self.f_score = self.g_score + self.h_score
 

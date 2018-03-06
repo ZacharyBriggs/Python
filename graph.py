@@ -13,9 +13,9 @@ class Graph:
         for x in range(0, self.dimensions.x_pos):            
             for y in range(0, self.dimensions.y_pos):                
                 self.nodes.append(Node(Vector2(x, y)))
+    
     def __getiten__(self, index):
         return self.nodes[index]
-    
 
     def print_graph(self, start_node, goal_node, path):
         graph_string = ""
