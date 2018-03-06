@@ -17,6 +17,11 @@ class Graph:
     
     def __getiten__(self, index):
         return self.nodes[index]
+    
+    def find_node(self, pos):
+        for node in self.nodes:
+            if node.position == pos:
+                return node
 
     def print_graph(self, start_node, goal_node, path, surface):
         graph_string = ""
@@ -24,20 +29,17 @@ class Graph:
         shapes = Shape(surface)
         node_num = 0
         for node in self.nodes:
+            shapes.draw_node(draw_pos) 
             if node.traversable is False:
-                graph_string = "[X]" + graph_string
+                shapes.draw_wall(draw_pos)
             elif node.position == start_node.position:
-                graph_string = "[S]" + graph_string
+                shapes.draw_start(draw_pos)
             elif node.position == goal_node.position:
-                graph_string = "[G]" + graph_string
                 shapes.draw_goal(draw_pos)
             elif path.__contains__(node):
-                 graph_string = "[@]" + graph_string
-            else:            
-                graph_string = "[ ]" + graph_string
-                shapes.draw_node(draw_pos)  
+                shapes.draw_path(draw_pos)
+            draw_pos.x_pos += 25
             if node.position.y_pos >= self.dimensions.y_pos - 1:
-                graph_string = "\n" + graph_string
-                print graph_string
-                graph_string = ""
+                draw_pos.y_pos += 25
+                draw_pos.x_pos = 0
             node_num += 1

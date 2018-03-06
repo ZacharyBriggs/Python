@@ -81,6 +81,7 @@ def main():
     pygame.key.set_repeat(1, 1)
     astar = A_Star(8, 43, 7, 7)
     path = astar.pathfind(8, 43, astar.search_area)
+    astar.search_area.nodes[7].toggle_traversable()
     astar.search_area.print_graph(astar.start_node, astar.goal_node,path, screen)
     while True:
         for event in pygame.event.get():

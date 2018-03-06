@@ -43,7 +43,7 @@ class Node(object):
         '''Sets the node's parent to the node passed in'''
         self.parent = parent_node
         
-    def toggle_traversable():
+    def toggle_traversable(self):
         '''Changes traversable to fale if it is true and vice versa'''
         if self.traversable == True:
             self.traversable = False
