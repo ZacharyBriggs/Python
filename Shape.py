@@ -16,3 +16,5 @@ class Shape(object):
         pygame.draw.line(self.surface, (0,0,255), pos.x_pos, pos.y_pos)
     def draw_path(self, pos):
         pygame.draw.rect(self.surface, (255,0,0), (pos.x_pos, pos.y_pos, 20, 20))
+    def draw_cursor(self, pos):
+        pygame.draw.circle(self.surface, (100,100,50),(pos.x_pos+8, pos.y_pos+8), 8)

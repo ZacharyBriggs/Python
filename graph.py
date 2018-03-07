@@ -23,15 +23,15 @@ class Graph:
             if node.position == pos:
                 return node
 
-    def print_graph(self, start_node, goal_node, path, surface):
-        graph_string = ""
+    def draw_graph(self, start_node, goal_node, path, surface, cursor):    
         draw_pos = Vector2(0,0)
-        shapes = Shape(surface)
-        node_num = 0
+        shapes = Shape(surface)we cant ecveryone have some intelligence stats his is a -1 with a -10 mod
         for node in self.nodes:
             shapes.draw_node(draw_pos) 
             if node.traversable is False:
                 shapes.draw_wall(draw_pos)
+            if node.position == cursor.position:
+                shapes.draw_cursor(draw_pos)
             elif node.position == start_node.position:
                 shapes.draw_start(draw_pos)
             elif node.position == goal_node.position:
@@ -42,4 +42,3 @@ class Graph:
             if node.position.y_pos >= self.dimensions.y_pos - 1:
                 draw_pos.y_pos += 25
                 draw_pos.x_pos = 0
-            node_num += 1

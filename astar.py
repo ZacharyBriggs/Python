@@ -6,17 +6,17 @@ from shape import Shape
 import pygame
 
 class A_Star:
-    def __init__(self, start, goal, width, height):
+    def __init__(self, start, goal, graph):
         '''Initilizes the A_Star class and creates an open_list, close_list, sets the start_node, and goal_node'''
         self.open_list = []
         self.close_list = []  
-        self.search_area = Graph(Vector2(width, height))
-        self.search_area.create_nodes()
         self.neighbors = []
         self.path = []
-        self.start_node = self.search_area.nodes[start]
-        self.goal_node = self.search_area.nodes[goal]
+        self.start_node = graph.nodes[start]
+        self.start_node.is_start = True
+        self.goal_node = graph.nodes[goal]
         self.goal_node.is_goal = True
+        self.open_list.append(graph.nodes[start])
 
     def find_neighbors(self, graph, current_pos):
         '''Finds all the neighbors adjacent to the current node and returns a list of the neighbors'''
@@ -36,12 +36,10 @@ class A_Star:
                     neighbors.append(node)
         return neighbors
 
-    def pathfind(self, start, goal, search):
+    def pathfind(self, search):
         '''The A_Star algorithm. Detects a path to a goal node on a grid and returns a path list'''
         goal_found = False
-        self.open_list.append(self.search_area.nodes[start])
-        start_node = self.search_area.nodes[start]
-        start_node.is_start = True
+              
         current_node = self.open_list[0]                
         #Adds the starting node to the open_list and sets the current node to the starting node
         while not self.close_list.__contains__(self.goal_node) or len(self.open_list) != 0:
@@ -74,19 +72,29 @@ class A_Star:
         return self.path
 
 def main():
+    start = 23
+    goal = 10
+    height = 7
+    width = 7
     pygame.init()
     screen = pygame.display.set_mode((1080, 720))
     screen.fill((255, 100, 100))
     pos = Vector2(100, 100)
     pygame.key.set_repeat(1, 1)
-    astar = A_Star(8, 43, 7, 7)
-    path = astar.pathfind(8, 43, astar.search_area)
-    astar.search_area.nodes[7].toggle_traversable()
-    astar.search_area.print_graph(astar.start_node, astar.goal_node,path, screen)
+    search_area = Graph(Vector2(height, width))
+    search_area.create_nodes()
     while True:
+        mouse_pos = pygame.mouse.get_pos()
+        astar = A_Star(start, goal, search_area)
+        path = astar.pathfind(search_area)
+        search_area.draw_graph(astar.start_node, astar.goal_node,path, screen, )
+        pygame.event.pump()
         for event in pygame.event.get():
-                if event.type == pygame.QUIT or pygame.key.get_pressed()[pygame.K_ESCAPE] != 0:
-                    return
-                pygame.display.flip()
+            if event.type == pygame.QUIT or pygame.key.get_pressed()[pygame.K_ESCAPE] != 0:
+                return  
+            if event.type == pygame.MOUSEBUTTONDOWN():
+                 
+        pygame.display.update()        
+        pygame.display.flip()
 
 main()
