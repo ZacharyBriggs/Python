@@ -4,17 +4,11 @@ import pygame
 class Shape(object):
     def __init__(self, surface):
         self.surface = surface
-    def draw_node(self,pos):
-        pygame.draw.rect(self.surface, (255, 255, 255), (pos.x_pos, pos.y_pos, 20, 20))
-    def draw_wall(self, pos):
-        pygame.draw.rect(self.surface, (0, 0, 0), (pos.x_pos, pos.y_pos, 20, 20))
-    def draw_goal(self, pos):
-        pygame.draw.rect(self.surface, (0, 255, 0), (pos.x_pos, pos.y_pos, 20, 20))
-    def draw_start(self, pos):
-        pygame.draw.rect(self.surface, (0,0,255), (pos.x_pos, pos.y_pos, 20, 20))
+        self.pygame_object = None
+    def draw_square(self, r, g, b, pos, width, height):
+        self.pygame_object = pygame.draw.rect(self.surface,(r, g, b),(pos.x_pos, pos.y_pos, width, height))
     def draw_line(self, pos):
-        pygame.draw.line(self.surface, (0,0,255), pos.x_pos, pos.y_pos)
+        self.pygame_object = pygame.draw.line(self.surface, (0,0,255), pos.x_pos, pos.y_pos)
     def draw_path(self, pos):
-        pygame.draw.rect(self.surface, (255,0,0), (pos.x_pos, pos.y_pos, 20, 20))
-    def draw_cursor(self, pos):
-        pygame.draw.circle(self.surface, (100,100,50),(pos.x_pos+8, pos.y_pos+8), 8)
+        self.pygame_object = pygame.draw.rect(self.surface, (255,0,0), (pos.x_pos, pos.y_pos, 20, 20))
+

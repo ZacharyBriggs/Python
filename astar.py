@@ -72,7 +72,7 @@ class A_Star:
         return self.path
 
 def main():
-    start = 23
+    start = 40
     goal = 10
     height = 7
     width = 7
@@ -87,13 +87,12 @@ def main():
         mouse_pos = pygame.mouse.get_pos()
         astar = A_Star(start, goal, search_area)
         path = astar.pathfind(search_area)
-        search_area.draw_graph(astar.start_node, astar.goal_node,path, screen, )
+        search_area.draw_graph(astar, screen)
         pygame.event.pump()
         for event in pygame.event.get():
             if event.type == pygame.QUIT or pygame.key.get_pressed()[pygame.K_ESCAPE] != 0:
-                return  
-            if event.type == pygame.MOUSEBUTTONDOWN():
-                 
+                return   
+        
         pygame.display.update()        
         pygame.display.flip()
 
