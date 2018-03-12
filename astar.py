@@ -39,7 +39,6 @@ class A_Star:
     def pathfind(self, search):
         '''The A_Star algorithm. Detects a path to a goal node on a grid and returns a path list'''
         goal_found = False
-              
         current_node = self.open_list[0]                
         #Adds the starting node to the open_list and sets the current node to the starting node
         while not self.close_list.__contains__(self.goal_node) or len(self.open_list) != 0:
@@ -92,7 +91,6 @@ def main():
         for event in pygame.event.get():
             if event.type == pygame.QUIT or pygame.key.get_pressed()[pygame.K_ESCAPE] != 0:
                 return   
-        
         pygame.display.update()        
         pygame.display.flip()
 
