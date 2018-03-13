@@ -70,7 +70,7 @@ class A_Star:
         #Adds all the parents to a path list and then returns it       
         return self.path
 
-def main():
+'''def main():
     start = 40
     goal = 10
     height = 7
@@ -78,6 +78,8 @@ def main():
     pygame.init()
     screen = pygame.display.set_mode((1080, 720))
     screen.fill((255, 100, 100))
+    font = pygame.font.SysFont('Chiller', 30)
+    textsurface = font.render('Test', False, (0,0,0))
     pos = Vector2(100, 100)
     pygame.key.set_repeat(1, 1)
     search_area = Graph(Vector2(height, width))
@@ -94,4 +96,4 @@ def main():
         pygame.display.update()        
         pygame.display.flip()
 
-main()
+main()'''

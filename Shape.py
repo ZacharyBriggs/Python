@@ -6,23 +6,35 @@ class Shape(object):
         self.pos = pos
         self.surface = surface
         self.color = rgb
-class Rectangle(object):
-    def __init__(self, shape, scaler, width, height):
-        self.scale = scaler
-        self.rect(shape.surface, shape.color, shape.pos.x_pos, shape.pos.y_pos, width, height)
-class Line(object):
-    def __init__(self, shape, scaler, start, end):
-        self.line(shape.surface, shape.color, start, end)
-class Text(object):
-class Circle(object):
-    def __init__(self, shape, color)
-    def __init__(self, surface):
-        self.surface = surface
-        self.pygame_object = None
-    def draw_square(self, r, g, b, pos, width, height):
-        self.pygame_object = pygame.draw.rect(self.surface,(r, g, b),(pos.x_pos, pos.y_pos, width, height))
-    def draw_line(self, pos):
-        self.pygame_object = pygame.draw.line(self.surface, (0,0,255), pos.x_pos, pos.y_pos)
-    def draw_path(self, pos):
-        self.pygame_object = pygame.draw.rect(self.surface, (255,0,0), (pos.x_pos, pos.y_pos, 20, 20))
 
+class Rectangle(Shape):
+    def __init__(self, pos, surface, rgb, width, height):
+        Shape.__init__(self, pos, surface, rgb)
+        self.rect = pygame.rect.Rect(pos.x_pos, pos.y_pos, width, height)            
+    def draw(self):
+        pygame.draw.rect(self.surface, self.color, self.rect)
+
+class Line(Shape):
+    def __init__(self, start, end, surface, rgb, thickness):
+        Shape.__init__(self, start, surface, rgb)
+        self.start_point = start
+        self.end_point = end
+        self.thickness = thickness
+    def draw(self):
+        pygame.draw.line(self.surface, self.color, (self.start_point.x_pos, self.start_point.y_pos), (self.end_point.x_pos, self.end_point.y_pos), self.thickness)
+
+class Text(Shape):
+    def __init__(self, text, font, pos, surface, rgb):
+        Shape.__init__(self, pos, surface, rgb)
+        self.text = text
+        self.font = font
+    def draw(self):
+        screen = self.font.render(self.text, False, self.color)
+        self.surface.blit(screen, (self.pos.x_pos, self.pos.y_pos))
+        
+class Circle(Shape):
+    def __init__(self, pos, surface, rgb, radius):
+        Shape.__init__(self, pos, surface, rgb)
+        self.radius = radius
+    def draw(self):
+        pygame.draw.circle(self.surface, self.color, (self.pos.x_pos, self.pos.y_pos), self.radius)
