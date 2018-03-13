@@ -14,38 +14,56 @@ class Visual_Graph(object):
         self.vis_nodes = []
         self.graph = graph
         self.surface = surface
-    def create_vis_graph(self, astar):
-        list_shapes = []
-        list_num = 0
-        draw_pos = Vector2(0,0)
-        for node in self.graph.nodes:            
-            list_shapes.append(Rectangle(draw_pos, self.surface,(255,255,255),25,25))
-            self.vis_nodes.append(Visual_Node((node.position), list_shapes[list_num]))
-            for close_node in astar.close_list:
-                if close_node.position == node.position:
-                    list_shapes.append(Rectangle(draw_pos, self.surface,(200,150,100),25,25))
-            for open_node in astar.open_list:
-                if open_node.position == node.position:
-                    list_shapes.append(Rectangle(draw_pos, self.surface,(100,200,100),25,25))
-            if node.is_start is True:
-                self.vis_nodes[list_num].is_start = True
-                list_shapes.append(Rectangle(draw_pos, self.surface,(0,255,0),25,25))
-            elif node.is_goal is True:
-                self.vis_nodes[list_num].is_goal = True
-                list_shapes.append(Rectangle(draw_pos, self.surface,(0,0,255),25,25))
-            elif astar.path.__contains__(node):
-                list_shapes.append(Rectangle(draw_pos, self.surface,(100,150,200),25,25))
-            draw_pos.x_pos += 30
-            list_num += 1
-            if node.position.y_pos >= self.graph.dimensions.y_pos - 1:
-                draw_pos.y_pos += 30
-                draw_pos.x_pos = 0
-        a = 0
+
+    def create_vis_graph(self):
+        counter = 0
+        for x in range(0, self.graph.dimensions.x_pos * 25, 25):
+            for y in range(0, self.graph.dimensions.y_pos * 25, 25):
+                rect = Rectangle(Vector2(x,y), self.surface, (255,255,255), 15,15)
+                new_node = Visual_Node(self.graph.nodes[counter], rect)
+                self.vis_nodes.append(new_node)
+                counter += 1
 
     def draw_vis_graph(self):
         for vis_node in self.vis_nodes:
             vis_node.draw()
 
+    def get_visual(self, node):
+        for visual in self.vis_nodes:
+            if visual.node == node:
+                return visual
+        return None
+
+class Visual_Astar(object):
+    def __init__(self, graph, surface):
+        self.algorithm = A_Star(1, 99, graph)
+        self.graph_visual = Visual_Graph(graph, surface)
+        self.graph_visual.create_vis_graph()
+        self.algorithm.pathfind(graph)
+
+    def update(self):
+        for node in self.algorithm.open_list:
+            visual = self.graph_visual.get_visual(node)
+            if visual is not None:
+                visual.shape.color = (255, 0, 255)
+        for node in self.algorithm.close_list:
+            visual = self.graph_visual.get_visual(node)
+            if visual is not None:
+                visual.shape.color = (0, 255, 0)
+        for node in self.algorithm.path:
+            visual = self.graph_visual.get_visual(node)
+            if visual is not None:
+                visual.shape.color = (155, 255, 155)
+        start = self.graph_visual.get_visual(self.algorithm.start_node)
+        if start is not None:
+            start.shape.color = (0, 0, 255)
+        goal = self.graph_visual.get_visual(self.algorithm.goal_node)
+        if goal is not None:
+            goal.shape.color = (255, 0, 0)
+
+    def draw(self):
+        self.graph_visual.draw_vis_graph()
+        
 start = 70
 goal = 45
 height = 10
@@ -58,19 +76,15 @@ graph.nodes[goal].is_goal = True
 font = pygame.font.SysFont('Chiller', 300)
 screen = pygame.display.set_mode((1080, 720))
 vis_graph = Visual_Graph(graph, screen)
-a = Rectangle(Vector2(100,100), screen, (255,255,255), 35,35)
-vis_node = Visual_Node(graph.nodes[24], a)
-'''b = Circle(Vector2(300,300), screen, (255,255,255), 35)
-c = Line(Vector2(400,200), Vector2(200,400), screen, (255,255,255), 10)
-d = Text('Test', font, Vector2(500,500),screen,(255,255,255))'''
-
 running = True
+astar = A_Star(start, goal, graph)
+path = astar.pathfind(graph)
+vis_star = Visual_Astar(graph, screen)
 while running:
-    astar = A_Star(start, goal, graph)
-    path = astar.pathfind(graph)
     for event in pygame.event.get():
         if event == pygame.QUIT:
-            running = False
-    vis_graph.create_vis_graph(astar)
-    vis_graph.draw_vis_graph()
+            running = False 
+    
+    vis_star.update()
+    vis_star.draw()
     pygame.display.flip()
