@@ -13,7 +13,15 @@ class Visual_Node(object):
         self.shape = shape
         self.is_start = False
         self.is_goal = False
+        self.is_traversable = False
 
     def draw(self):
         self.shape.draw()
+
+    def toggle_traversable(self):
+        if self.is_traversable == True:
+            self.is_traversable = False
+        else:
+            self.is_traversable = True
+        #self.
     

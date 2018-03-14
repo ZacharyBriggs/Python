@@ -11,7 +11,7 @@ class A_Star:
         self.open_list = []
         self.close_list = []  
         self.neighbors = []
-        self.path = []
+        self.graph = graph
         self.start_node = graph.nodes[start]
         self.start_node.is_start = True
         self.goal_node = graph.nodes[goal]
@@ -21,7 +21,8 @@ class A_Star:
     def find_neighbors(self, graph, current_pos):
         '''Finds all the neighbors adjacent to the current node and returns a list of the neighbors'''
         neighbors = []
-        neighbor_pos = [] 
+        neighbor_pos = []
+        self.path = []
         neighbor_pos.append(current_pos + Vector2(-1, 1)) #Top Left
         neighbor_pos.append(current_pos + Vector2(0, 1)) #Top
         neighbor_pos.append(current_pos + Vector2(1, 1)) #Top Right
@@ -38,7 +39,10 @@ class A_Star:
 
     def pathfind(self, search):
         '''The A_Star algorithm. Detects a path to a goal node on a grid and returns a path list'''
+        self.open_list = []
+        self.close_list = []
         goal_found = False
+        self.open_list.append(self.start_node)
         current_node = self.open_list[0]                
         #Adds the starting node to the open_list and sets the current node to the starting node
         while not self.close_list.__contains__(self.goal_node) or len(self.open_list) != 0:

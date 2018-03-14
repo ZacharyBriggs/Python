@@ -17,9 +17,9 @@ class Visual_Graph(object):
 
     def create_vis_graph(self):
         counter = 0
-        for x in range(0, self.graph.dimensions.x_pos * 25, 25):
-            for y in range(0, self.graph.dimensions.y_pos * 25, 25):
-                rect = Rectangle(Vector2(x,y), self.surface, (255,255,255), 15,15)
+        for x in range(8, self.graph.dimensions.x_pos * 60, 60):
+            for y in range(8, self.graph.dimensions.y_pos * 60, 60):
+                rect = Rectangle(Vector2(x,y), self.surface, (255,255,255), 45,45)
                 new_node = Visual_Node(self.graph.nodes[counter], rect)
                 self.vis_nodes.append(new_node)
                 counter += 1
@@ -41,7 +41,8 @@ class Visual_Astar(object):
         self.graph_visual.create_vis_graph()
         self.algorithm.pathfind(graph)
 
-    def update(self):
+    def update(self, events):
+        self.algorithm.pathfind(self.algorithm.graph)
         for node in self.algorithm.open_list:
             visual = self.graph_visual.get_visual(node)
             if visual is not None:
@@ -54,6 +55,32 @@ class Visual_Astar(object):
             visual = self.graph_visual.get_visual(node)
             if visual is not None:
                 visual.shape.color = (155, 255, 155)
+        for visual in self.graph_visual.vis_nodes:
+            if visual.shape.rect.collidepoint(pygame.mouse.get_pos()):
+                for event in events:
+                    if pygame.mouse.get_pressed()[0]:            
+                        visual.toggle_traversable()
+                        if visual.is_traversable == False:
+                            visual.shape.color = (255, 255, 255)
+                        else:
+                            visual.shape.color = (0, 0, 0)
+                    if pygame.mouse.get_pressed()[2]:            
+                        visual.is_start = True
+                        visual.node.is_start = True                        
+                        if visual.is_start == True:
+                            visual.shape.color = (0, 0, 255)
+                        else:
+                            visual.shape.color = (0, 0, 0)
+                    if pygame.mouse.get_pressed()[1]:
+                        visual.is_goal = True
+                        visual.node.is_goal = True
+                        old = self.graph_visual.get_visual(self.algorithm.goal_node)
+                        if old is not None:
+                            old.is_goal = False
+                            old.shape.color = (255, 255, 255)
+                        self.algorithm.goal_node = visual.node
+                        if visual.is_goal == True:
+                            visual.shape.color = (255,0,0)    
         start = self.graph_visual.get_visual(self.algorithm.start_node)
         if start is not None:
             start.shape.color = (0, 0, 255)
@@ -66,8 +93,8 @@ class Visual_Astar(object):
         
 start = 70
 goal = 45
-height = 10
-width = 10
+height = 18
+width = 18
 pygame.init()
 graph = Graph(Vector2(height,width))
 graph.create_nodes()
@@ -81,10 +108,12 @@ astar = A_Star(start, goal, graph)
 path = astar.pathfind(graph)
 vis_star = Visual_Astar(graph, screen)
 while running:
-    for event in pygame.event.get():
+    events = pygame.event.get()
+    for event in events:
         if event == pygame.QUIT:
             running = False 
     
-    vis_star.update()
+    vis_star.update(events)
     vis_star.draw()
+    pygame.display.update()        
     pygame.display.flip()
