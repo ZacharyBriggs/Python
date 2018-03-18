@@ -7,6 +7,9 @@ class Shape(object):
         self.surface = surface
         self.color = rgb
 
+    def change_color(self, rgb):
+        self.color = rgb
+
 class Rectangle(Shape):
     def __init__(self, pos, surface, rgb, width, height):
         Shape.__init__(self, pos, surface, rgb)
