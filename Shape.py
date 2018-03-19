@@ -6,7 +6,6 @@ class Shape(object):
         self.pos = pos
         self.surface = surface
         self.color = rgb
-
     def change_color(self, rgb):
         self.color = rgb
 

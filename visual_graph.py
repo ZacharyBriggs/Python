@@ -23,6 +23,10 @@ class Visual_Graph(object):
                 new_node = Visual_Node(self.graph.nodes[counter], rect)
                 self.vis_nodes.append(new_node)
                 counter += 1
+    
+    def update(self, events):
+        for node in self.vis_nodes:
+            node.update(events)
 
     def draw_vis_graph(self):
         for vis_node in self.vis_nodes:
@@ -33,65 +37,3 @@ class Visual_Graph(object):
             if visual.node == node:
                 return visual
         return None
-
-class Visual_Astar(object):
-    def __init__(self, graph, surface):
-        self.algorithm = A_Star(1, 99, graph)
-        self.graph_visual = Visual_Graph(graph, surface)
-        self.graph_visual.create_vis_graph()
-        self.algorithm.pathfind(graph)
-
-    def update(self, events):
-        self.algorithm.pathfind(self.algorithm.graph)
-        for node in self.algorithm.open_list:
-            visual = self.graph_visual.get_visual(node)
-            if visual is not None:
-                visual.shape.change_color((255, 0, 255))
-        for node in self.algorithm.close_list:
-            visual = self.graph_visual.get_visual(node)
-            if visual is not None:
-                visual.shape.change_color((0, 255, 0))
-        for node in self.algorithm.path:
-            visual = self.graph_visual.get_visual(node)
-            if visual is not None:
-                visual.shape.change_color((155, 255, 155))
-        for visual in self.graph_visual.vis_nodes:
-            if visual.shape.rect.collidepoint(pygame.mouse.get_pos()):
-                for event in events:
-                    old = self.graph_visual.get_visual(self.algorithm.goal_node)
-                    visual.check_mouse_clicks(event, old, self.algorithm)
-        start = self.graph_visual.get_visual(self.algorithm.start_node)
-        if start is not None:
-            start.shape.change_color((0, 0, 255))
-        goal = self.graph_visual.get_visual(self.algorithm.goal_node)
-        if goal is not None:
-            goal.shape.change_color((255, 0, 0))
-
-    def draw(self):
-        self.graph_visual.draw_vis_graph()
-        
-start = 70
-goal = 45
-height = 18
-width = 18
-pygame.init()
-graph = Graph(Vector2(height,width))
-graph.create_nodes()
-graph.nodes[start].is_start = True
-graph.nodes[goal].is_goal = True
-font = pygame.font.SysFont('Chiller', 300)
-screen = pygame.display.set_mode((1080, 720))
-vis_graph = Visual_Graph(graph, screen)
-running = True
-astar = A_Star(start, goal, graph)
-path = astar.pathfind(graph)
-vis_star = Visual_Astar(graph, screen)
-while running:
-    events = pygame.event.get()
-    for event in events:
-        if event == pygame.QUIT:
-            running = False 
-    vis_star.update(events)
-    vis_star.draw()
-    pygame.display.update()        
-    pygame.display.flip()
