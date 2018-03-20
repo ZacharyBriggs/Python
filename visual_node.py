@@ -4,7 +4,7 @@ from shape import Shape
 from shape import Rectangle
 from shape import Circle
 from shape import Text
-from shape import Line
+from shape import Lines
 import pygame
 
 class Visual_Node(object):
@@ -33,7 +33,6 @@ class Visual_Node(object):
             self.shape.change_color((155,125,125))
         else:
             self.shape.change_color((255,255,255))
-        self.check_mouse_clicks()
 
     def draw(self):
         self.shape.draw()

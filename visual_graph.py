@@ -29,9 +29,7 @@ class Visual_Graph(object):
             node.update(events)
 
     def draw_vis_graph(self):
-        node_pos = []
         for vis_node in self.vis_nodes:
-            node_pos.append()
             vis_node.draw()
 
     def get_visual(self, node):

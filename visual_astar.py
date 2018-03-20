@@ -6,6 +6,7 @@ from shape import Rectangle
 from shape import Circle
 from shape import Text
 from shape import Line
+from shape import Lines
 from visual_node import Visual_Node
 from visual_graph import Visual_Graph
 import pygame
@@ -19,7 +20,7 @@ class Visual_Astar(object):
         self.clear_searchspace()
 
     def update(self, events):
-        self.clear_searchspace()    
+        self.clear_searchspace()  
         for node in self.algorithm.open_list:
             visual = self.graph_visual.get_visual(node)
             if visual is not None:
@@ -40,7 +41,13 @@ class Visual_Astar(object):
                 node.reset_node()
             self.clear_searchspace()
             self.algorithm.pathfind(self.graph_visual.graph)
-
+        path_pos = []
+        for node in self.algorithm.path:
+            path_pos.append((node.position.x_pos, node.position.y_pos))
+        path_line = Lines(self.graph_visual.surface,(100,125,100),path_pos)
+        path_line.draw()  
+        self.check_mouse_clicks()
+            
     def clear_searchspace(self):
         for node in self.graph_visual.vis_nodes:            
             node.is_path = False
@@ -49,6 +56,7 @@ class Visual_Astar(object):
 
     def draw(self):
         self.graph_visual.draw_vis_graph()
+    
 
     def set_start(self):
         for visual in self.graph_visual.vis_nodes:
