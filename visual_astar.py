@@ -16,6 +16,7 @@ class Visual_Astar(object):
         self.graph_visual = Visual_Graph(graph, surface)
         self.graph_visual.create_vis_graph()
         self.algorithm.pathfind(graph)
+        self.clear_searchspace()
 
     def update(self, events):
         self.clear_searchspace()    
@@ -35,6 +36,8 @@ class Visual_Astar(object):
         self.set_start()
         self.graph_visual.update(events)
         if pygame.key.get_pressed()[pygame.K_RETURN] != 0:
+            for node in self.graph_visual.vis_nodes:
+                node.reset_node()
             self.clear_searchspace()
             self.algorithm.pathfind(self.graph_visual.graph)
 
@@ -57,6 +60,7 @@ class Visual_Astar(object):
                         vis_start.is_start = False
                         vis_start.node.is_start = False
                     self.algorithm.start_node = visual.node
+                    print str(self.algorithm.start_node.position.x_pos) + "," + str(self.algorithm.start_node.position.y_pos)      
     
     def set_goal(self):
         for visual in self.graph_visual.vis_nodes:
@@ -67,23 +71,18 @@ class Visual_Astar(object):
                     if vis_goal is not None:
                         vis_goal.is_goal = False
                         vis_goal.node.is_goal = False
-                    self.algorithm.goal_node = visual.node        
+                    self.algorithm.goal_node = visual.node
+                    print str(self.algorithm.goal_node.position.x_pos) + "," + str(self.algorithm.goal_node.position.y_pos)      
 
-start = 70
-goal = 45
 height = 18
 width = 18
 pygame.init()
 graph = Graph(Vector2(height,width))
 graph.create_nodes()
-graph.nodes[start].is_start = True
-graph.nodes[goal].is_goal = True
 font = pygame.font.SysFont('Chiller', 300)
 screen = pygame.display.set_mode((1080, 720))
 vis_graph = Visual_Graph(graph, screen)
 running = True
-astar = A_Star(start, goal, graph)
-path = astar.pathfind(graph)
 vis_star = Visual_Astar(graph, screen)
 while running:
     screen.fill((0, 0, 0))
@@ -95,3 +94,4 @@ while running:
         vis_star.draw()        
         pygame.display.flip()
         pygame.display.update()
+    screen.fill((255,255,255))

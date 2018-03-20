@@ -25,6 +25,8 @@ class Visual_Node(object):
             self.shape.change_color((255,0,0))
         elif not self.is_traversable:
             self.shape.change_color((0,0,0))
+        elif self.is_path and (not self.is_goal or not self.is_start):
+            self.shape.change_color((0,0,255))
         elif self.is_open and (not self.is_goal or not self.is_start):
             self.shape.change_color((125,125,155))
         elif self.is_closed and (not self.is_goal or not self.is_start):
@@ -52,3 +54,12 @@ class Visual_Node(object):
     def toggle_traversable(self):
         self.node.toggle_traversable()
         self.is_traversable = self.node.traversable
+    
+    def reset_node(self):
+        self.node.g_score = 0
+        self.node.h_score = 0
+        self.node.f_score = 0
+        self.node.parent = None
+        self.is_open = False
+        self.is_closed = False
+        self.is_path = False

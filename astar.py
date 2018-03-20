@@ -28,7 +28,6 @@ class A_Star:
         '''Finds all the neighbors adjacent to the current node and returns a list of the neighbors'''
         neighbors = []
         neighbor_pos = []
-        self.path = []
         neighbor_pos.append(current_pos + Vector2(-1, 1)) #Top Left
         neighbor_pos.append(current_pos + Vector2(0, 1)) #Top
         neighbor_pos.append(current_pos + Vector2(1, 1)) #Top Right
@@ -75,7 +74,7 @@ class A_Star:
         if self.goal_node not in self.close_list:
             return [] 
         step = self.goal_node                                           
-        while step != None:
+        while step != None or step is self.start_node:
             self.path.append(step)
             step = step.parent
         #Adds all the parents to a path list and then returns it       
