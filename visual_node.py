@@ -4,12 +4,14 @@ from shape import Shape
 from shape import Rectangle
 from shape import Circle
 from shape import Text
+from shape import Line
 from shape import Lines
 import pygame
 
 class Visual_Node(object):
-    def __init__(self, node, shape):
+    def __init__(self, node, pos, shape):
         self.node = node
+        self.position = pos
         self.shape = shape
         self.is_start = False
         self.is_goal = False
@@ -33,9 +35,14 @@ class Visual_Node(object):
             self.shape.change_color((155,125,125))
         else:
             self.shape.change_color((255,255,255))
+        self.check_mouse_clicks()
 
-    def draw(self):
+    def draw(self, vis_graph):
         self.shape.draw()
+        if self.node.parent != None:
+            parent = vis_graph.get_visual(self.node.parent)
+            parent_line = Line(self.position, parent.position, self.shape.surface, (150,50,50),1)
+            parent_line.draw()
 
     def check_mouse_clicks(self):
         if self.shape.rect.collidepoint(pygame.mouse.get_pos()):

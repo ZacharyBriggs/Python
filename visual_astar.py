@@ -17,7 +17,6 @@ class Visual_Astar(object):
         self.graph_visual = Visual_Graph(graph, surface)
         self.graph_visual.create_vis_graph()
         self.algorithm.pathfind(graph)
-        self.clear_searchspace()
 
     def update(self, events):
         self.clear_searchspace()  
@@ -41,12 +40,6 @@ class Visual_Astar(object):
                 node.reset_node()
             self.clear_searchspace()
             self.algorithm.pathfind(self.graph_visual.graph)
-        path_pos = []
-        for node in self.algorithm.path:
-            path_pos.append((node.position.x_pos, node.position.y_pos))
-        path_line = Lines(self.graph_visual.surface,(100,125,100),path_pos)
-        path_line.draw()  
-        self.check_mouse_clicks()
             
     def clear_searchspace(self):
         for node in self.graph_visual.vis_nodes:            
@@ -56,8 +49,18 @@ class Visual_Astar(object):
 
     def draw(self):
         self.graph_visual.draw_vis_graph()
-    
-
+        if self.algorithm.path is None:
+            return
+    '''path_pos = []
+        for node in self.graph_visual.vis_nodes:
+            if node.is_path == True:
+                path_pos.append((node.position.x_pos, node.position.y_pos))
+        if path_pos is not None:
+            if len(path_pos) <= 1:
+                return
+            path_line = Lines(self.graph_visual.surface,(100,125,100),path_pos)
+            path_line.draw()'''
+            
     def set_start(self):
         for visual in self.graph_visual.vis_nodes:
             if visual.shape.rect.collidepoint(pygame.mouse.get_pos()):
@@ -83,7 +86,7 @@ class Visual_Astar(object):
                     print str(self.algorithm.goal_node.position.x_pos) + "," + str(self.algorithm.goal_node.position.y_pos)      
 
 height = 18
-width = 18
+width = 12
 pygame.init()
 graph = Graph(Vector2(height,width))
 graph.create_nodes()

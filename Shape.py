@@ -27,7 +27,7 @@ class Line(Shape):
 
 class Lines(Shape):
     def __init__(self, surface, rgb, pos_list):
-        Shape.__init__(self, pos_list[0], surface, rgb)
+        Shape.__init__(self, pos_list, surface, rgb)
         self.color = rgb
         self.point_list = pos_list
     def draw(self):
