@@ -17,14 +17,17 @@ class Graph:
                 self.nodes.append(Node(Vector2(x, y)))
     
     def __getiten__(self, index):
+        '''Overloads get index and returns an int representing the index of a node'''
         return self.nodes[index]
     
     def find_node(self, pos):
+        '''Takes in a vector2 representing a nodes pos and if a nodes pos in the graph is equal to the pos passed it the node is returned'''
         for node in self.nodes:
             if node.position == pos:
                 return node
 
-    def draw_graph(self, astar, surface):    
+    def draw_graph(self, astar, surface):   
+        '''Draws all the nodes in the graph''' 
         draw_pos = Vector2(0,0)
         shapes = Shape(surface)
         left_click, middle_click, right_click = pygame.mouse.get_pressed()

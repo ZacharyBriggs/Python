@@ -21,6 +21,7 @@ class Visual_Node(object):
         self.is_closed = False
 
     def update(self, events):
+        '''Updates the node and changes its color if it is not traversable, start, goal, a path, in the open or close list'''
         if self.is_start:
             self.shape.change_color((0,255,0))
         elif self.is_goal:
@@ -38,6 +39,7 @@ class Visual_Node(object):
         self.check_mouse_clicks()
 
     def draw(self, vis_graph):
+        '''Draws the shape and a line connecting the node to its parent'''
         self.shape.draw()
         if self.node.parent != None:
             parent = vis_graph.get_visual(self.node.parent)
@@ -45,23 +47,28 @@ class Visual_Node(object):
             parent_line.draw()
 
     def check_mouse_clicks(self):
+        '''Checks if the mouse is colliding with a node and if any of the mouse buttons were clicked'''
         if self.shape.rect.collidepoint(pygame.mouse.get_pos()):
             if pygame.mouse.get_pressed()[0]:
                 self.toggle_traversable()
                 
     def set_as_start(self):
+        '''sets the visual node as the start and the node contained in it'''
         self.is_start = True
         self.node.is_start = True
 
     def set_as_goal(self):
+        '''sets the visual node as the goal and the node contained in it'''
         self.is_goal = True
         self.node.is_goal = True
 
     def toggle_traversable(self):
+        '''sets the visual node as not traversable and the node contained in it'''
         self.node.toggle_traversable()
         self.is_traversable = self.node.traversable
     
     def reset_node(self):
+        '''Clears out the visual node'''
         self.node.g_score = 0
         self.node.h_score = 0
         self.node.f_score = 0

@@ -19,6 +19,7 @@ class A_Star:
         self.open_list.append(graph.nodes[start])
     
     def startup(self):
+        '''Creates and resets lists used by the astar algorithim'''
         self.open_list = []
         self.close_list = []
         self.neighbors = []
@@ -79,31 +80,3 @@ class A_Star:
             step = step.parent
         #Adds all the parents to a path list and then returns it       
         return self.path
-
-'''def main():
-    start = 40
-    goal = 10
-    height = 7
-    width = 7
-    pygame.init()
-    screen = pygame.display.set_mode((1080, 720))
-    screen.fill((255, 100, 100))
-    font = pygame.font.SysFont('Chiller', 30)
-    textsurface = font.render('Test', False, (0,0,0))
-    pos = Vector2(100, 100)
-    pygame.key.set_repeat(1, 1)
-    search_area = Graph(Vector2(height, width))
-    search_area.create_nodes()
-    while True:
-        mouse_pos = pygame.mouse.get_pos()
-        astar = A_Star(start, goal, search_area)
-        path = astar.pathfind(search_area)
-        search_area.draw_graph(astar, screen)
-        pygame.event.pump()
-        for event in pygame.event.get():
-            if event.type == pygame.QUIT or pygame.key.get_pressed()[pygame.K_ESCAPE] != 0:
-                return   
-        pygame.display.update()        
-        pygame.display.flip()
-
-main()'''

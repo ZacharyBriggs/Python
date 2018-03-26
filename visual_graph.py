@@ -16,6 +16,7 @@ class Visual_Graph(object):
         self.surface = surface
 
     def create_vis_graph(self):
+        '''Creates all the visual_nodes in a graph'''
         counter = 0
         for x in range(8, self.graph.dimensions.x_pos * 60, 60):
             for y in range(8, self.graph.dimensions.y_pos * 60, 60):
@@ -25,14 +26,17 @@ class Visual_Graph(object):
                 counter += 1
     
     def update(self, events):
+        '''Calls the update function for all the nodes in the graph'''
         for node in self.vis_nodes:
             node.update(events)
 
     def draw_vis_graph(self):
+        '''Calls the draw function for all nodes in the graph'''
         for vis_node in self.vis_nodes:
             vis_node.draw(self)
 
     def get_visual(self, node):
+        '''Returns the visual node equal to the node inputted. Returns false if no visual node is equal to the node'''
         for visual in self.vis_nodes:
             if visual.node == node:
                 return visual

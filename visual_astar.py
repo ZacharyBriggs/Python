@@ -13,12 +13,14 @@ import pygame
 
 class Visual_Astar(object):
     def __init__(self, graph, surface):
+        '''Creates a class for controlling the astar algorithim'''
         self.algorithm = A_Star(1, 99, graph)
         self.graph_visual = Visual_Graph(graph, surface)
         self.graph_visual.create_vis_graph()
         self.algorithm.pathfind(graph)
 
     def update(self, events):
+        '''Updates/clears the graph and calls the path finding function'''
         self.clear_searchspace()  
         for node in self.algorithm.open_list:
             visual = self.graph_visual.get_visual(node)
@@ -42,26 +44,21 @@ class Visual_Astar(object):
             self.algorithm.pathfind(self.graph_visual.graph)
             
     def clear_searchspace(self):
+        '''Clears all the nodes in the graph'''
         for node in self.graph_visual.vis_nodes:            
             node.is_path = False
             node.is_open = False
             node.is_closed = False
 
     def draw(self):
+        '''Calls the visual graphs draw function unless there is no path'''
         self.graph_visual.draw_vis_graph()
         if self.algorithm.path is None:
             return
-    '''path_pos = []
-        for node in self.graph_visual.vis_nodes:
-            if node.is_path == True:
-                path_pos.append((node.position.x_pos, node.position.y_pos))
-        if path_pos is not None:
-            if len(path_pos) <= 1:
-                return
-            path_line = Lines(self.graph_visual.surface,(100,125,100),path_pos)
-            path_line.draw()'''
+
             
     def set_start(self):
+        '''Sets a node as the start node if the mouse collides with the node and the right mouse is clicked'''
         for visual in self.graph_visual.vis_nodes:
             if visual.shape.rect.collidepoint(pygame.mouse.get_pos()):
                 if pygame.mouse.get_pressed()[2]:
@@ -74,6 +71,7 @@ class Visual_Astar(object):
                     print str(self.algorithm.start_node.position.x_pos) + "," + str(self.algorithm.start_node.position.y_pos)      
     
     def set_goal(self):
+        '''Sets a node as the goal node if the mouse collides with the node and the middle mouse is clicked'''
         for visual in self.graph_visual.vis_nodes:
             if visual.shape.rect.collidepoint(pygame.mouse.get_pos()):
                 if pygame.mouse.get_pressed()[1]:
