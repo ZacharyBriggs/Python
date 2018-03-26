@@ -6,58 +6,48 @@ import pygame
 
 class Graph:
     '''Graph class that has a function for creation and for finding neighbors of a node'''
+    #Prototype: Graph()
+    #Description: Creates a graph object
+    #Arguments: The graph's dimensions
+    #Precondition: None
+    #Postcondition: A graph is created
+    #Protection: Public.
     def __init__(self, dimensions):
         '''Creates a graph with a width and height of a the dimensions Vector2 passed in and creates a list of nodes'''
         self.dimensions = dimensions
         self.nodes = []        
         
+    #Prototype: create_nodes()
+    #Description: Creates all the nodes needed for the graph
+    #Arguments: None
+    #Precondition: A graph
+    #Postcondition: All the nodes needed for the graph are created
+    #Protection: Public.
     def create_nodes(self):
         '''Creates a graph of nodes from the dimensions vector'''
         for x in range(0, self.dimensions.x_pos):            
             for y in range(0, self.dimensions.y_pos):                
                 self.nodes.append(Node(Vector2(x, y)))
     
+    #Prototype: .
+    #Description: Overloads get index and returns the node at the index
+    #Arguments: An int representing the index
+    #Precondition: A graph with the nodes created
+    #Postcondition: The node at the index is returned
+    #Protection: Public.
     def __getiten__(self, index):
         '''Overloads get index and returns an int representing the index of a node'''
         return self.nodes[index]
     
+    #Prototype: find_node()
+    #Description: Finds the node at the position passed in
+    #Arguments: A position
+    #Precondition:A graph with the nodes created
+    #Postcondition: The node at the position is returned
+    #Protection: Public.
     def find_node(self, pos):
         '''Takes in a vector2 representing a nodes pos and if a nodes pos in the graph is equal to the pos passed it the node is returned'''
         for node in self.nodes:
             if node.position == pos:
                 return node
-
-    def draw_graph(self, astar, surface):   
-        '''Draws all the nodes in the graph''' 
-        draw_pos = Vector2(0,0)
-        shapes = Shape(surface)
-        left_click, middle_click, right_click = pygame.mouse.get_pressed()
-        clicked = False
-        events = pygame.event.get()
-        for node in self.nodes:
-            shapes.draw_square(255,255,255,draw_pos, 20, 20)
-            
-            for close_node in astar.close_list:
-                if node.position == close_node.position:
-                    shapes.draw_square(100,30,150,draw_pos,20,20)
-            if astar.path.__contains__(node):
-                shapes.draw_square(255,0,0, draw_pos,20,20)
-            for open_node in astar.open_list:
-                if node.position == open_node.position:
-                    shapes.draw_square(100,150,30,draw_pos,20,20)
-            if node.traversable is False:
-                shapes.draw_square(0,0,0,draw_pos,20,20)
-            elif node.position == astar.start_node.position:
-                shapes.draw_square(0,0,255,draw_pos,20,20)
-            elif node.position == astar.goal_node.position:
-                shapes.draw_square(0,255,0,draw_pos,20,20)
-            if shapes.pygame_object.collidepoint(pygame.mouse.get_pos()) and left_click:
-                node.toggle_traversable()
-                clicked = left_click
-            if shapes.pygame_object.collidepoint(pygame.mouse.get_pos()) and right_click:
-                astar.goal_node = node
-                astar.goal_node.is_goal = True
-            draw_pos.x_pos += 25
-            if node.position.y_pos >= self.dimensions.y_pos - 1:
-                draw_pos.y_pos += 25
-                draw_pos.x_pos = 0
+    

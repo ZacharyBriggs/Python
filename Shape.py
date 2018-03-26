@@ -1,6 +1,7 @@
 from vector2 import Vector2
 import pygame
 
+
 class Shape(object):
     '''Shape class that stores values that all shapes use'''
     def __init__(self, pos, surface, rgb):

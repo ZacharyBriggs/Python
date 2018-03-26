@@ -1,6 +1,14 @@
 '''Node class for making up a graph'''
 from vector2 import Vector2
 class Node(object):
+    '''Node class with functions for calculating g,h, and f score along with functions to modify its properties'''
+    
+    #Prototype: Node()
+    #Description: Creates a node
+    #Arguments: A position
+    #Precondition: None
+    #Postcondition: A node is created
+    #Protection: Public.
     def __init__(self, pos):
         self.position = pos
         self.traversable = True
@@ -11,11 +19,14 @@ class Node(object):
         self.is_start = False
         self.is_goal = False
 
+    #Prototype: calc_g()
+    #Description: Calculates the g_score of the node
+    #Arguments: The current node
+    #Precondition: A node
+    #Postcondition: The node's g_score is set
+    #Protection: Public.
     def calc_g(self, current_node):
-        '''Calculates the G score of a node'''
-        #if node is in open list or has a parent
-        #calculate a tentative g and if the tentative g is better than the nodes current g
-        #reparent the node and set the g to the tentative and recalc f score  
+        '''Calculates the G score of a node'''        
         tentative_g = self.g_score
         if self.position.x_pos is current_node.position.x_pos and self.position.y_pos is current_node.position.y_pos:
             return
@@ -31,20 +42,44 @@ class Node(object):
         self.g_score = tentative_g
         self.set_parent(current_node)
 
+    #Prototype: calc_h()
+    #Description: Calculates the h_score of the node
+    #Arguments: The current node
+    #Precondition: A node
+    #Postcondition: The node's h_score is set
+    #Protection: Public.
     def calc_h(self, goal):
         '''Calculates the H score of a node'''
         self.h_score = self.position.calc_distance(goal.position) * 10
 
+    #Prototype: calc_f()
+    #Description: Calculates the f_score of the node
+    #Arguments: The current node
+    #Precondition: A node
+    #Postcondition: The node's f_score is set
+    #Protection: Public.
     def calc_f(self):
         '''Calculates the F score of a node'''
         self.f_score = self.g_score + self.h_score
 
+    #Prototype: set_parent()
+    #Description: Sets the node's parent to the node passed in
+    #Arguments: The parent node
+    #Precondition: A node
+    #Postcondition: The node's parent is set to the node passed in
+    #Protection: Public.
     def set_parent(self, parent_node):
         '''Sets the node's parent to the node passed in'''
         self.parent = parent_node
-        
+    
+    #Prototype: toggle_traversable()
+    #Description: Sets the node's traversable to true if traversable is false and vice versa
+    #Arguments: None
+    #Precondition: A node
+    #Postcondition: The node's traversable is now set to the opposite
+    #Protection: Public.
     def toggle_traversable(self):
-        '''Changes traversable to fale if it is true and vice versa'''
+        '''Changes traversable to false if it is true and vice versa'''
         if self.traversable == True:
             self.traversable = False
         else:

@@ -20,8 +20,14 @@ class Visual_Astar(object):
         self.graph_visual.create_vis_graph()
         self.algorithm.pathfind(graph)
         
+    #Prototype: update()
+    #Description: Clears out the graph and calls algorithim's pathfind function
+    #Arguments: None
+    #Precondition: A visual astar object
+    #Postcondition: Astar is updated and a new path is found
+    #Protection: Public.
     def update(self):
-        '''Updates/clears the graph and calls the path finding function''' 
+        '''Updates/clears the graph and calls the path finding function'''
         for node in self.algorithm.open_list:
             visual = self.graph_visual.get_visual(node)
             if visual is not None:
@@ -41,7 +47,13 @@ class Visual_Astar(object):
             for node in self.graph_visual.vis_nodes:
                 node.reset_node()
             self.algorithm.pathfind(self.graph_visual.graph)
-
+    
+    #Prototype: draw()
+    #Description: Finds the node at the position passed in
+    #Arguments: A position
+    #Precondition:A graph with the nodes created
+    #Postcondition: The node at the position is returned
+    #Protection: Public.
     def draw(self):
         '''Calls the visual graphs draw function unless there is no path'''
         self.graph_visual.draw_vis_graph()
@@ -80,7 +92,6 @@ width = 12
 pygame.init()
 graph = Graph(Vector2(height,width))
 graph.create_nodes()
-font = pygame.font.SysFont('Chiller', 300)
 screen = pygame.display.set_mode((1080, 720))
 vis_graph = Visual_Graph(graph, screen)
 running = True

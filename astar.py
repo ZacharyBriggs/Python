@@ -79,5 +79,5 @@ class A_Star:
         while step != None or step is self.start_node:
             self.path.append(step)
             step = step.parent
-        #Adds all the parents to a path list and then returns it       
+        #Adds all the parents to a path list and then returns it
         return self.path

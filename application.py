@@ -13,4 +13,4 @@ from visual_astar import Visual_Astar
 import pygame
 
 class Application(object):
-    def main(self):
+    def main(self, vis_astar):
