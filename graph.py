@@ -10,6 +10,7 @@ class Graph:
         '''Creates a graph with a width and height of a the dimensions Vector2 passed in and creates a list of nodes'''
         self.dimensions = dimensions
         self.nodes = []        
+        
     def create_nodes(self):
         '''Creates a graph of nodes from the dimensions vector'''
         for x in range(0, self.dimensions.x_pos):            

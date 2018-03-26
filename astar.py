@@ -6,6 +6,7 @@ from shape import Shape
 import pygame
 
 class A_Star:
+    '''Astar class for finding node neighbors and for using the pathfinding algorithim'''
     def __init__(self, start, goal, graph):
         '''Initilizes the A_Star class and creates an open_list, close_list, sets the start_node, and goal_node'''
         self.open_list = []

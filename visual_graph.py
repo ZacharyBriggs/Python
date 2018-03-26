@@ -10,7 +10,9 @@ from visual_node import Visual_Node
 import pygame
 
 class Visual_Graph(object):
+    '''Visual graph class for creating a list of visual nodes and drawing the nodes'''
     def __init__(self, graph, surface):
+        '''Creates a visual graph which is a collection of visual nodes'''
         self.vis_nodes = []
         self.graph = graph
         self.surface = surface
@@ -25,10 +27,10 @@ class Visual_Graph(object):
                 self.vis_nodes.append(new_node)
                 counter += 1
     
-    def update(self, events):
+    def update(self):
         '''Calls the update function for all the nodes in the graph'''
         for node in self.vis_nodes:
-            node.update(events)
+            node.update()
 
     def draw_vis_graph(self):
         '''Calls the draw function for all nodes in the graph'''

@@ -9,7 +9,15 @@ from shape import Lines
 import pygame
 
 class Visual_Node(object):
+    '''Visual node class that has various functions to change its values and an update function for checking nodes value and a draw function'''
     def __init__(self, node, pos, shape):
+        '''Creates a visual node with the node, pos, and shape passed in'''
+        '''Prototype: Visual_Node()
+        Description: Creates a visual node with the values passed in 
+        Arguments: A regular node, position, and shape
+        Precondition: None
+        Postcondition: A visual node is created
+        Protection: Public.'''
         self.node = node
         self.position = pos
         self.shape = shape
@@ -20,8 +28,14 @@ class Visual_Node(object):
         self.is_open = False
         self.is_closed = False
 
-    def update(self, events):
+    def update(self):
         '''Updates the node and changes its color if it is not traversable, start, goal, a path, in the open or close list'''
+        '''Prototype: update()
+        Description: Updates and changes the node's color if it hits any of the if statements also checks mouse clicks 
+        Arguments: None
+        Precondition:  A visual node
+        Postcondition: THe node is updated and its shapes color might be changed
+        Protection: Public.'''
         if self.is_start:
             self.shape.change_color((0,255,0))
         elif self.is_goal:
@@ -40,6 +54,12 @@ class Visual_Node(object):
 
     def draw(self, vis_graph):
         '''Draws the shape and a line connecting the node to its parent'''
+        '''Prototype: draw()
+        Description: Draws the node and a line connecting the node to its parent
+        Arguments: None
+        Precondition: A vector2
+        Postcondition: A vector2 is created
+        Protection: Public.'''
         self.shape.draw()
         if self.node.parent != None:
             parent = vis_graph.get_visual(self.node.parent)
@@ -47,7 +67,13 @@ class Visual_Node(object):
             parent_line.draw()
 
     def check_mouse_clicks(self):
-        '''Checks if the mouse is colliding with a node and if any of the mouse buttons were clicked'''
+        '''Checks if the mouse is colliding with a node and if left click was clicked'''
+        '''Prototype: check_mouse_clicks()
+        Description: Checks if the mouse is colliding with a node and if left click was clicked
+        Arguments: None
+        Precondition: A node
+        Postcondition: The node is either made traversable or not traversable
+    	Protection: Public.'''
         if self.shape.rect.collidepoint(pygame.mouse.get_pos()):
             if pygame.mouse.get_pressed()[0]:
                 self.toggle_traversable()

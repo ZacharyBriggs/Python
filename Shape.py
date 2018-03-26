@@ -2,8 +2,9 @@ from vector2 import Vector2
 import pygame
 
 class Shape(object):
+    '''Shape class that stores values that all shapes use'''
     def __init__(self, pos, surface, rgb):
-        ''''''
+        '''Creates a default Shape that has values that all shapes use'''
         self.pos = pos
         self.surface = surface
         self.color = rgb
@@ -12,6 +13,7 @@ class Shape(object):
         self.color = rgb
 
 class Rectangle(Shape):
+    '''Rectangle shape'''
     def __init__(self, pos, surface, rgb, width, height):
         '''Creates a rectangle shape'''
         Shape.__init__(self, pos, surface, rgb)
@@ -21,6 +23,7 @@ class Rectangle(Shape):
         pygame.draw.rect(self.surface, self.color, self.rect)
 
 class Line(Shape):
+    '''Line shape'''
     def __init__(self, start, end, surface, rgb, thickness):
         '''Creates a Line shape'''
         Shape.__init__(self, start, surface, rgb)
@@ -32,6 +35,7 @@ class Line(Shape):
         pygame.draw.line(self.surface, self.color, (self.start_point.x_pos, self.start_point.y_pos), (self.end_point.x_pos, self.end_point.y_pos), self.thickness)
 
 class Lines(Shape):
+    '''Connected lines shape'''
     def __init__(self, surface, rgb, pos_list):
         '''Creates a Lines shape'''
         Shape.__init__(self, pos_list, surface, rgb)
@@ -42,8 +46,9 @@ class Lines(Shape):
         pygame.draw.lines(self.surface, self.color, False, self.point_list)
         
 class Text(Shape):
+    '''Text class'''
     def __init__(self, text, font, pos, surface, rgb):
-        '''Creates a text shape'''
+        '''Creates a text shape '''
         Shape.__init__(self, pos, surface, rgb)
         self.text = text
         self.font = font
@@ -53,6 +58,7 @@ class Text(Shape):
         self.surface.blit(screen, (self.pos.x_pos, self.pos.y_pos))
         
 class Circle(Shape):
+    '''Circle shape'''
     def __init__(self, pos, surface, rgb, radius):
         '''Creates a circle shape'''
         Shape.__init__(self, pos, surface, rgb)

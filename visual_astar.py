@@ -12,16 +12,16 @@ from visual_graph import Visual_Graph
 import pygame
 
 class Visual_Astar(object):
+    '''Visual astar class for handling the astar algorithim and drawing the visual graph/nodes'''
     def __init__(self, graph, surface):
         '''Creates a class for controlling the astar algorithim'''
         self.algorithm = A_Star(1, 99, graph)
         self.graph_visual = Visual_Graph(graph, surface)
         self.graph_visual.create_vis_graph()
         self.algorithm.pathfind(graph)
-
-    def update(self, events):
-        '''Updates/clears the graph and calls the path finding function'''
-        self.clear_searchspace()  
+        
+    def update(self):
+        '''Updates/clears the graph and calls the path finding function''' 
         for node in self.algorithm.open_list:
             visual = self.graph_visual.get_visual(node)
             if visual is not None:
@@ -36,19 +36,11 @@ class Visual_Astar(object):
                 visual.is_path = True
         self.set_goal()
         self.set_start()
-        self.graph_visual.update(events)
+        self.graph_visual.update()
         if pygame.key.get_pressed()[pygame.K_RETURN] != 0:
             for node in self.graph_visual.vis_nodes:
                 node.reset_node()
-            self.clear_searchspace()
             self.algorithm.pathfind(self.graph_visual.graph)
-            
-    def clear_searchspace(self):
-        '''Clears all the nodes in the graph'''
-        for node in self.graph_visual.vis_nodes:            
-            node.is_path = False
-            node.is_open = False
-            node.is_closed = False
 
     def draw(self):
         '''Calls the visual graphs draw function unless there is no path'''
@@ -99,8 +91,7 @@ while running:
     for event in events:
         if event == pygame.QUIT or pygame.key.get_pressed()[pygame.K_ESCAPE] != 0:
             running = False 
-        vis_star.update(events)
+        vis_star.update()
         vis_star.draw()        
         pygame.display.flip()
         pygame.display.update()
-    screen.fill((255,255,255))
