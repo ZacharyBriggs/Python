@@ -25,9 +25,11 @@ class Graph:
     #Protection: Public.
     def create_nodes(self):
         '''Creates a graph of nodes from the dimensions vector'''
+        counter = -1
         for x in range(0, self.dimensions.x_pos):            
-            for y in range(0, self.dimensions.y_pos):                
-                self.nodes.append(Node(Vector2(x, y)))
+            for y in range(0, self.dimensions.y_pos):
+                counter += 1                
+                self.nodes.append(Node(Vector2(x, y), counter))
     
     #Prototype: .
     #Description: Overloads get index and returns the node at the index

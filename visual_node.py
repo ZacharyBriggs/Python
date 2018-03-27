@@ -1,11 +1,8 @@
 from vector2 import Vector2
 from graph import Graph
-from shape import Shape
 from shape import Rectangle
-from shape import Circle
-from shape import Text
-from shape import Line
 from shape import Lines
+from shape import Line
 import pygame
 
 class Visual_Node(object):

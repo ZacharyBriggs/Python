@@ -2,9 +2,6 @@
 from vector2 import Vector2
 from node import Node
 from graph import Graph
-from shape import Shape
-import pygame
-
 class A_Star:
     '''Astar class for finding node neighbors and for using the pathfinding algorithim'''
     #Prototype: A_Star()
@@ -13,17 +10,14 @@ class A_Star:
     #Precondition: None
     #Postcondition: A new A_Star object is created
     #Protection: Public.
-    def __init__(self, start, goal, graph):
+    def __init__(self, width, height):
         '''Initilizes the A_Star class and creates an open_list, close_list, sets the start_node, and goal_node'''
         self.open_list = []
         self.close_list = []  
+        self.search_area = Graph(Vector2(width, height))
+        self.search_area.create_nodes()
         self.neighbors = []
-        self.graph = graph
-        self.start_node = graph.nodes[start]
-        self.start_node.is_start = True
-        self.goal_node = graph.nodes[goal]
-        self.goal_node.is_goal = True
-        self.open_list.append(graph.nodes[start])
+        self.path = []
 
     #Prototype: startup()
     #Description: Creates and resets lists used by the astar algorithim
@@ -35,9 +29,8 @@ class A_Star:
         '''Creates and resets lists used by the astar algorithim'''
         self.open_list = []
         self.close_list = []
-        self.neighbors = []
         self.path = []
-    
+
     #Prototype: find_neighbors()
     #Description: Finds all the neighbors adjacent to the current node and returns a list of the neighbors
     #Arguments: A graph and a nodes position
@@ -47,7 +40,7 @@ class A_Star:
     def find_neighbors(self, graph, current_pos):
         '''Finds all the neighbors adjacent to the current node and returns a list of the neighbors'''
         neighbors = []
-        neighbor_pos = []
+        neighbor_pos = [] 
         neighbor_pos.append(current_pos + Vector2(-1, 1)) #Top Left
         neighbor_pos.append(current_pos + Vector2(0, 1)) #Top
         neighbor_pos.append(current_pos + Vector2(1, 1)) #Top Right
@@ -68,13 +61,16 @@ class A_Star:
     #Precondition: Astar object
     #Postcondition: The path from the start to the goal is returned
     #Protection: Public.
-    def pathfind(self, search):
+    def pathfind(self, start, goal, search):
         '''The A_Star algorithm. Detects a path to a goal node on a grid and returns a path list'''
-        if self.goal_node is None or self.start_node is None:
-            return
         self.startup()
+        self.start_node = search.nodes[start]
+        self.start_node.is_start = True
+        self.goal_node = search.nodes[goal]
+        self.goal_node.is_goal = True
+        step = self.goal_node
         goal_found = False
-        self.open_list.append(self.start_node)
+        self.open_list.append(search.nodes[start])
         current_node = self.open_list[0]                
         #Adds the starting node to the open_list and sets the current node to the starting node
         while not self.close_list.__contains__(self.goal_node) or len(self.open_list) != 0:
@@ -92,7 +88,8 @@ class A_Star:
             for neighbor in self.neighbors:
                 #if node isn't in open list, and it is not in the closed list, and is traversable  add it, calc g, calc h, clac for
                 if not self.close_list.__contains__(neighbor) and neighbor.traversable:
-                    self.open_list.append(neighbor)                    
+                    if not self.open_list.__contains__(neighbor):
+                        self.open_list.append(neighbor)                                            
                     neighbor.calc_g(current_node)
                     neighbor.calc_h(self.goal_node)
                     neighbor.calc_f()  
@@ -100,8 +97,8 @@ class A_Star:
         if self.goal_node not in self.close_list:
             return [] 
         step = self.goal_node                                           
-        while step != None or step is self.start_node:
+        while step != None:
             self.path.append(step)
             step = step.parent
-        #Adds all the parents to a path list and then returns it
+        #Adds all the parents to a path list and then returns it       
         return self.path

@@ -9,8 +9,9 @@ class Node(object):
     #Precondition: None
     #Postcondition: A node is created
     #Protection: Public.
-    def __init__(self, pos):
+    def __init__(self, pos, index):
         self.position = pos
+        self.index = index
         self.traversable = True
         self.g_score = 0
         self.h_score = 0
