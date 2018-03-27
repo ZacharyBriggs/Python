@@ -7,6 +7,12 @@ import pygame
 
 class A_Star:
     '''Astar class for finding node neighbors and for using the pathfinding algorithim'''
+    #Prototype: A_Star()
+    #Description: Creates an A_Star object
+    #Arguments: A start node, goal node, and a graph
+    #Precondition: None
+    #Postcondition: A new A_Star object is created
+    #Protection: Public.
     def __init__(self, start, goal, graph):
         '''Initilizes the A_Star class and creates an open_list, close_list, sets the start_node, and goal_node'''
         self.open_list = []
@@ -18,14 +24,26 @@ class A_Star:
         self.goal_node = graph.nodes[goal]
         self.goal_node.is_goal = True
         self.open_list.append(graph.nodes[start])
-    
+
+    #Prototype: startup()
+    #Description: Creates and resets lists used by the astar algorithim
+    #Arguments: None
+    #Precondition: None
+    #Postcondition: The lists are reset/created
+    #Protection: Public.
     def startup(self):
         '''Creates and resets lists used by the astar algorithim'''
         self.open_list = []
         self.close_list = []
         self.neighbors = []
         self.path = []
-
+    
+    #Prototype: find_neighbors()
+    #Description: Finds all the neighbors adjacent to the current node and returns a list of the neighbors
+    #Arguments: A graph and a nodes position
+    #Precondition: An astar object
+    #Postcondition: A list of neighbors is returned
+    #Protection: Public.
     def find_neighbors(self, graph, current_pos):
         '''Finds all the neighbors adjacent to the current node and returns a list of the neighbors'''
         neighbors = []
@@ -44,6 +62,12 @@ class A_Star:
                     neighbors.append(node)
         return neighbors
 
+    #Prototype: pathfind()
+    #Description: The A_Star algorithm. Detects a path to a goal node on a grid and returns a path list
+    #Arguments: A graph
+    #Precondition: Astar object
+    #Postcondition: The path from the start to the goal is returned
+    #Protection: Public.
     def pathfind(self, search):
         '''The A_Star algorithm. Detects a path to a goal node on a grid and returns a path list'''
         if self.goal_node is None or self.start_node is None:

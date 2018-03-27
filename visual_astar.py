@@ -13,6 +13,13 @@ import pygame
 
 class Visual_Astar(object):
     '''Visual astar class for handling the astar algorithim and drawing the visual graph/nodes'''
+
+    #Prototype: Visual_Astar()
+    #Description: Creates a Visual_Astar object
+    #Arguments: A graph object and a surface to draw on
+    #Precondition: None
+    #Postcondition: Visual Astar object is created
+    #Protection: Public.
     def __init__(self, graph, surface):
         '''Creates a class for controlling the astar algorithim'''
         self.algorithm = A_Star(1, 99, graph)
@@ -49,18 +56,23 @@ class Visual_Astar(object):
             self.algorithm.pathfind(self.graph_visual.graph)
     
     #Prototype: draw()
-    #Description: Finds the node at the position passed in
-    #Arguments: A position
-    #Precondition:A graph with the nodes created
-    #Postcondition: The node at the position is returned
+    #Description: Calls the visual graphs draw function unless there is no path
+    #Arguments: None
+    #Precondition: A visual astar object
+    #Postcondition: The graph is drawn
     #Protection: Public.
     def draw(self):
         '''Calls the visual graphs draw function unless there is no path'''
-        self.graph_visual.draw_vis_graph()
         if self.algorithm.path is None:
             return
-
-            
+        self.graph_visual.draw_vis_graph()
+    
+    #Prototype: set_start()
+    #Description: Sets a node as the start node if the mouse collides with the node and the right mouse is clicked
+    #Arguments: None
+    #Precondition: A visual astar object
+    #Postcondition: The node clicked is set as the start node
+    #Protection: Public.
     def set_start(self):
         '''Sets a node as the start node if the mouse collides with the node and the right mouse is clicked'''
         for visual in self.graph_visual.vis_nodes:
@@ -74,6 +86,12 @@ class Visual_Astar(object):
                     self.algorithm.start_node = visual.node
                     print str(self.algorithm.start_node.position.x_pos) + "," + str(self.algorithm.start_node.position.y_pos)      
     
+    #Prototype: set_goal()
+    #Description: Sets a node as the goal node if the mouse collides with the node and the middle mouse is clicked
+    #Arguments: None
+    #Precondition: A visual astar object
+    #Postcondition: The node clicked is set as the goal node
+    #Protection: Public.
     def set_goal(self):
         '''Sets a node as the goal node if the mouse collides with the node and the middle mouse is clicked'''
         for visual in self.graph_visual.vis_nodes:
