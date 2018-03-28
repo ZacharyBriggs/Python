@@ -73,3 +73,4 @@ class Visual_Graph(object):
             if visual.node == node:
                 return visual
         return None
+    

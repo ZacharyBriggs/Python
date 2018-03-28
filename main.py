@@ -8,8 +8,17 @@ from visual_graph import Visual_Graph
 from visual_astar import Visual_Astar
 import pygame
 
-class Application(object):
+class Main(object):
+    '''Main file for setting up and running visual astar'''
+
+    #Prototype: main()
+    #Description: Sets up, runs, and draws astar
+    #Arguments: None
+    #Precondition: None
+    #Postcondition: The astar algorithm is drawn and ran
+    #Protection: Public.
     def main(self):
+        '''Sets up and runs astar'''
         pygame.init()
         screen = pygame.display.set_mode((1080, 720))        
         running = True
@@ -19,11 +28,12 @@ class Application(object):
             events = pygame.event.get()
             for event in events:
                 if event == pygame.QUIT or pygame.key.get_pressed()[pygame.K_ESCAPE] != 0:
-                    running = False 
+                    running = False
+
                 vis_star.update()
                 vis_star.draw()        
                 pygame.display.flip()
                 pygame.display.update()
 
-app = Application()
+app = Main()
 app.main()

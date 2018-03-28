@@ -25,7 +25,7 @@ class Visual_Astar(object):
         self.algorithm = A_Star(18, 12)
         self.graph_visual = Visual_Graph(self.algorithm.search_area, surface)
         self.graph_visual.create_vis_graph()
-        self.algorithm.pathfind(1, 100, self.algorithm.search_area)
+        self.algorithm.pathfind(1, 100,self.algorithm.search_area)
         self.start_node = None
         self.goal_node = None
         
@@ -82,13 +82,16 @@ class Visual_Astar(object):
         for visual in self.graph_visual.vis_nodes:
             if visual.shape.rect.collidepoint(pygame.mouse.get_pos()):
                 if pygame.mouse.get_pressed()[2]:
+                    if self.start_node != None:
+                        self.start_node.is_start = False
                     visual.set_as_start()
                     vis_start = self.graph_visual.get_visual(self.algorithm.start_node)
                     if vis_start is not None:
                         vis_start.is_start = False
                         vis_start.node.is_start = False
                     self.start_node = visual.node
-                    print str(self.algorithm.start_node.position.x_pos) + "," + str(self.algorithm.start_node.position.y_pos)      
+                    print str(self.algorithm.start_node.position.x_pos) + "," + str(self.algorithm.start_node.position.y_pos)
+                    self.graph_visual.update()      
     
     #Prototype: set_goal()
     #Description: Sets a node as the goal node if the mouse collides with the node and the middle mouse is clicked
@@ -101,10 +104,13 @@ class Visual_Astar(object):
         for visual in self.graph_visual.vis_nodes:
             if visual.shape.rect.collidepoint(pygame.mouse.get_pos()):
                 if pygame.mouse.get_pressed()[1]:
+                    if self.goal_node != None:
+                        self.goal_node.is_goal = False
                     visual.set_as_goal()
                     vis_goal = self.graph_visual.get_visual(self.algorithm.goal_node)
                     if vis_goal is not None:
                         vis_goal.is_goal = False
                         vis_goal.node.is_goal = False
                     self.goal_node = visual.node
-                    print str(self.algorithm.goal_node.position.x_pos) + "," + str(self.algorithm.goal_node.position.y_pos)      
+                    print str(self.algorithm.goal_node.position.x_pos) + "," + str(self.algorithm.goal_node.position.y_pos)
+                    self.graph_visual.update()     

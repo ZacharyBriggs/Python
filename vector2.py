@@ -11,7 +11,7 @@ class Vector2(object):
 	#Postcondition: A vector2 is created
 	#Protection: Public.
 	def __init__(self, xpos, ypos):
-		'''Vector 2 initilizer'''
+    		'''Vector 2 initilizer'''
 		self.x_pos = xpos
 		self.y_pos = ypos
 	
